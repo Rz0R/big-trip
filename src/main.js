@@ -41,7 +41,7 @@ render(siteTripEventsElement, createListsTemplate());
 
 const siteTripeEventsListElement = siteTripEventsElement.querySelector('.trip-events__list');
 
-render(siteTripeEventsListElement, createNewPointTemplate());
+render(siteTripeEventsListElement, createNewPointTemplate(generatePoint()));
 
 for (let i = 0; i < POINT_COUNT; i++) {
   render(siteTripeEventsListElement, createPointTemplate(generatePoint()));
