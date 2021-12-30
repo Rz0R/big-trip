@@ -1,4 +1,5 @@
-import { createTripInfoHeaderTemplate } from './view/trip-info-header';
+import { RenderPosition } from './const';
+import  TripInfoHeaderView from './view/trip-info-header';
 import { createTripInfoTemplate } from './view/trip-info';
 import { createTripPriceTemplate } from './view/trip-price';
 import { createTripMenuTemplate } from './view/trip-menu';
@@ -14,8 +15,9 @@ import { generatePoint } from './mock/point';
 const POINT_COUNT = 10;
 
 const siteTripMainElement = document.querySelector('.trip-main');
+const tripInfoHeaderComponent = new TripInfoHeaderView();
 
-render(siteTripMainElement, createTripInfoHeaderTemplate(), 'afterbegin');
+render(siteTripMainElement, tripInfoHeaderComponent.element, RenderPosition.AFTERBEGIN);
 
 // const siteTripInfoHeaderElement = siteTripMainElement.querySelector('.trip-info');
 

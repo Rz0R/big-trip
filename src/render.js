@@ -5,7 +5,7 @@ export const render = (container, element, place = RenderPosition.BEFOREEND) => 
     case RenderPosition.BEFOREBEGIN:
       container.before(element);
       break;
-    case RenderPosition.BEFOREBEGIN:
+    case RenderPosition.AFTERBEGIN:
       container.prepend(element);
       break;
     case RenderPosition.BEFOREEND:
