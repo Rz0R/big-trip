@@ -7,12 +7,9 @@ import { createTripSortTemplate } from './view/trip-sort';
 import { createListsTemplate } from './view/list';
 import { createNewPointTemplate } from './view/new-point';
 import { createPointTemplate } from './view/point';
-
+import { render } from './render';
 import { generatePoint } from './mock/point';
 
-const render = (container, template, place = 'beforeend') => (
-  container.insertAdjacentHTML(place, template)
-);
 
 const POINT_COUNT = 10;
 
@@ -20,29 +17,29 @@ const siteTripMainElement = document.querySelector('.trip-main');
 
 render(siteTripMainElement, createTripInfoHeaderTemplate(), 'afterbegin');
 
-const siteTripInfoHeaderElement = siteTripMainElement.querySelector('.trip-info');
+// const siteTripInfoHeaderElement = siteTripMainElement.querySelector('.trip-info');
 
-render(siteTripInfoHeaderElement, createTripInfoTemplate());
-render(siteTripInfoHeaderElement, createTripPriceTemplate());
+// render(siteTripInfoHeaderElement, createTripInfoTemplate());
+// render(siteTripInfoHeaderElement, createTripPriceTemplate());
 
-const siteTripMenuElement = siteTripMainElement.querySelector('.trip-controls__navigation');
+// const siteTripMenuElement = siteTripMainElement.querySelector('.trip-controls__navigation');
 
-render(siteTripMenuElement, createTripMenuTemplate());
+// render(siteTripMenuElement, createTripMenuTemplate());
 
-const siteTripFiltersElement = siteTripMainElement.querySelector('.trip-controls__filters');
+// const siteTripFiltersElement = siteTripMainElement.querySelector('.trip-controls__filters');
 
-render(siteTripFiltersElement, createTripFitersTemplate());
+// render(siteTripFiltersElement, createTripFitersTemplate());
 
-const siteTripEventsElement = document.querySelector('.trip-events');
+// const siteTripEventsElement = document.querySelector('.trip-events');
 
-render(siteTripEventsElement, createTripSortTemplate());
+// render(siteTripEventsElement, createTripSortTemplate());
 
-render(siteTripEventsElement, createListsTemplate());
+// render(siteTripEventsElement, createListsTemplate());
 
-const siteTripeEventsListElement = siteTripEventsElement.querySelector('.trip-events__list');
+// const siteTripeEventsListElement = siteTripEventsElement.querySelector('.trip-events__list');
 
-render(siteTripeEventsListElement, createNewPointTemplate(generatePoint()));
+// render(siteTripeEventsListElement, createNewPointTemplate(generatePoint()));
 
-for (let i = 0; i < POINT_COUNT; i++) {
-  render(siteTripeEventsListElement, createPointTemplate(generatePoint()));
-}
+// for (let i = 0; i < POINT_COUNT; i++) {
+//   render(siteTripeEventsListElement, createPointTemplate(generatePoint()));
+// }
