@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { formatDuration } from '../utils';
+import AbstractView from './abstract-view';
 
 const createOfferMarkup = (title, price) => (
   `<li class="event__offer">
@@ -50,4 +51,18 @@ const createPointTemplate = ({ type, city, offers, dateFrom, dateTo, isFavorite,
   </li>`);
 };
 
-export { createPointTemplate };
+class PointView extends AbstractView {
+  #point = null;
+
+  constructor(point) {
+    super();
+    this.#point = point;
+  }
+
+  get template() {
+    return createPointTemplate(this.#point);
+  }
+
+}
+
+export default PointView;

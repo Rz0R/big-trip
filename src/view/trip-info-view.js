@@ -1,3 +1,5 @@
+import AbstractView from "./abstract-view";
+
 const createTripInfoTemplate = () => (
   `<div class="trip-info__main">
     <h1 class="trip-info__title">Amsterdam &mdash; Chamonix &mdash; Geneva</h1>
@@ -5,4 +7,12 @@ const createTripInfoTemplate = () => (
   </div>`
 );
 
-export { createTripInfoTemplate };
+class  TripInfoView extends AbstractView {
+
+  get template() {
+    return createTripInfoTemplate();
+  }
+
+}
+
+export default TripInfoView;

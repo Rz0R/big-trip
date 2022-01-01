@@ -1,3 +1,5 @@
+import AbstractView from "./abstract-view";
+
 const createEditPointTemplate = () => (
   `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
@@ -161,4 +163,11 @@ const createEditPointTemplate = () => (
   </li>`
 );
 
-export { createEditPointTemplate };
+class EditPointView extends AbstractView {
+
+  get template() {
+    return createEditPointTemplate();
+  }
+}
+
+export default EditPointView;

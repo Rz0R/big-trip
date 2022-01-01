@@ -1,13 +1,13 @@
 import { RenderPosition } from './const';
-import  TripInfoHeaderView from './view/trip-info-header';
-import { createTripInfoTemplate } from './view/trip-info';
-import { createTripPriceTemplate } from './view/trip-price';
-import { createTripMenuTemplate } from './view/trip-menu';
-import { createTripFitersTemplate } from './view/trip-filter';
-import { createTripSortTemplate } from './view/trip-sort';
-import { createListsTemplate } from './view/list';
-import { createNewPointTemplate } from './view/new-point';
-import { createPointTemplate } from './view/point';
+import  TripInfoHeaderView from './view/trip-info-header-view';
+import { createTripInfoTemplate } from './view/trip-info-view';
+import { createTripPriceTemplate } from './view/price-view';
+import { createTripMenuTemplate } from './view/menu-view';
+import { createFitersTemplate } from './view/filter-view';
+import { createTripSortTemplate } from './view/sort-view';
+import { createListsTemplate } from './view/list-view';
+import { createNewPointTemplate } from './view/new-point-view';
+import { createPointTemplate } from './view/point-view';
 import { render } from './render';
 import { generatePoint } from './mock/point';
 

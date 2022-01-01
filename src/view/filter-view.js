@@ -1,4 +1,6 @@
-const createTripFitersTemplate = () => (
+import AbstractView from "./abstract-view";
+
+const createFitersTemplate = () => (
   `<form class="trip-filters" action="#" method="get">
     <div class="trip-filters__filter">
       <input id="filter-everything" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="everything" checked>
@@ -19,4 +21,13 @@ const createTripFitersTemplate = () => (
   </form>`
 );
 
-export { createTripFitersTemplate };
+
+class FitersView extends AbstractView {
+
+  get template() {
+    return createFitersTemplate();
+  }
+
+}
+
+export default FitersView;

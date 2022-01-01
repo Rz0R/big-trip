@@ -5,7 +5,7 @@ class AbstractView {
   #element = null;
 
   get element() {
-    if (this.#element) {
+    if (!this.#element) {
       this.#element = createElement(this.template);
     }
 

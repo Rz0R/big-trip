@@ -1,3 +1,5 @@
+import AbstractView from "./abstract-view";
+
 import dayjs from "dayjs";
 import { getRandomInteger } from "../utils";
 import { TYPES } from "../const";
@@ -136,5 +138,9 @@ const createNewPointTemplate = ({
     </li>`
   )
 };
+
+class NewPointView extends AbstractView {
+
+}
 
 export { createNewPointTemplate };
