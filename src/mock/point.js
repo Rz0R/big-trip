@@ -61,7 +61,7 @@ const generateDescription = () => {
   ];
   const randomIndex = getRandomInteger(0, descriptions.length - 1);
   return descriptions[randomIndex];
-}
+};
 
 const generatePhotos = () => {
   const photoAmount = getRandomInteger(1, 5);
@@ -71,7 +71,7 @@ const generatePhotos = () => {
     photos.push(url);
   }
   return photos;
-}
+};
 
 export const generatePoint = () => {
 

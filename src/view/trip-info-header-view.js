@@ -1,5 +1,5 @@
-import { createElement } from "../render";
-import AbstractView from "./abstract-view";
+import { createElement } from '../render';
+import AbstractView from './abstract-view';
 
 const createTripInfoHeaderTemplate = () => (
   `<section class="trip-main__trip-info  trip-info">

@@ -1,4 +1,4 @@
-import AbstractView from "./abstract-view";
+import AbstractView from './abstract-view';
 
 const createPriceTemplate = () => (
   `<p class="trip-info__cost">

@@ -1,4 +1,4 @@
-import AbstractView from "./abstract-view";
+import AbstractView from './abstract-view';
 
 const createEditPointTemplate = () => (
   `<li class="trip-events__item">

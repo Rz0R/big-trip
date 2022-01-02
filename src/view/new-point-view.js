@@ -140,7 +140,16 @@ const createNewPointTemplate = ({
 };
 
 class NewPointView extends AbstractView {
+  #point = null;
 
+  constructor(point) {
+    super();
+    this.#point = point;
+  }
+
+  get template() {
+    return createNewPointTemplate(this.#point);
+  }
 }
 
-export { createNewPointTemplate };
+export default NewPointView;
