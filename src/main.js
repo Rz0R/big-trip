@@ -51,11 +51,26 @@ const renderPoint = (taskListElement, point) => {
     replace(pointComponent.element, editPointComponent.element);
   };
 
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      replaceFormToEvent();
+      document.removeEventListener('keydown', onEscKeyDown);
+      console.log('esc');
+    }
+  }
+
   const editButton = pointComponent.element.querySelector('.event__rollup-btn');
-  editButton.addEventListener('click', replaceEventToForm);
+  editButton.addEventListener('click', () => {
+    replaceEventToForm();
+    document.addEventListener('keydown', onEscKeyDown);
+  });
 
   const saveButton = editPointComponent.element.querySelector('.event__save-btn');
-  saveButton.addEventListener('click', replaceFormToEvent);
+  saveButton.addEventListener('click', () => {
+    replaceFormToEvent();
+    document.removeEventListener('keydown', onEscKeyDown);
+  });
 
   const cancelButton = editPointComponent.element.querySelector('.event__reset-btn');
   cancelButton.addEventListener('click', replaceFormToEvent);
