@@ -6,6 +6,7 @@ import FilterView from './view/filter-view';
 import SortView from './view/sort-view';
 import ListView from './view/list-view';
 import NewPointView from './view/new-point-view';
+import EditPointView from './view/edit-point-view';
 import PointView from './view/point-view';
 import { render, replace } from './render';
 import { RenderPosition } from './const';
@@ -40,21 +41,24 @@ renderHeader();
 
 const renderPoint = (taskListElement, point) => {
   const pointComponent = new PointView(point);
-  const newPointComponent = new NewPointView(point);
+  const editPointComponent = new EditPointView(point);
 
   const replaceEventToForm = () => {
-    replace(newPointComponent.element, pointComponent.element);
+    replace(editPointComponent.element, pointComponent.element);
   };
 
   const replaceFormToEvent = () => {
-    replace(pointComponent.element, newPointComponent.element);
+    replace(pointComponent.element, editPointComponent.element);
   };
 
   const editButton = pointComponent.element.querySelector('.event__rollup-btn');
   editButton.addEventListener('click', replaceEventToForm);
 
-  const saveButton = newPointComponent.element.querySelector('.event__save-btn');
+  const saveButton = editPointComponent.element.querySelector('.event__save-btn');
   saveButton.addEventListener('click', replaceFormToEvent);
+
+  const cancelButton = editPointComponent.element.querySelector('.event__reset-btn');
+  cancelButton.addEventListener('click', replaceFormToEvent);
 
   render(taskListElement, pointComponent.element);
 };
