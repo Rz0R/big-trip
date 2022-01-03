@@ -1,8 +1,8 @@
-import AbstractView from "./abstract-view";
+import AbstractView from './abstract-view';
 
-import dayjs from "dayjs";
-import { getRandomInteger } from "../utils";
-import { TYPES } from "../const";
+import dayjs from 'dayjs';
+import { getRandomInteger } from '../utils';
+import { TYPES } from '../const';
 
 const createOfferMarkup = (title, price, ind, isChecked = false) => {
 
@@ -44,12 +44,12 @@ const createTypeListMarkup = () => {
         </fieldset>
       </div>
     </div>`
-  )
-}
+  );
+};
 
 const createPhotoMarkup = (url) => (
   `<img class="event__photo" src="${url}" alt="Event photo">`
-)
+);
 
 const creatEditPointTemplate = ({
   type = 'taxi',
@@ -136,7 +136,7 @@ const creatEditPointTemplate = ({
         </section>
       </form>
     </li>`
-  )
+  );
 };
 
 class EditPointView extends AbstractView {

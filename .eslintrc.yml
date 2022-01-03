@@ -1,9 +1,11 @@
 parserOptions:
-  ecmaVersion: 2018
+  ecmaVersion: 2021
   sourceType: 'module'
+  parser: 'babel-eslint'
 
 env:
   es2017: true
   browser: true
 
 extends: 'htmlacademy/vanilla'
+parser : '@babel/eslint-parser'

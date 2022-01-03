@@ -58,7 +58,7 @@ const renderPoint = (taskListElement, point) => {
       document.removeEventListener('keydown', onEscKeyDown);
       console.log('esc');
     }
-  }
+  };
 
   const editButton = pointComponent.element.querySelector('.event__rollup-btn');
   editButton.addEventListener('click', () => {
