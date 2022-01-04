@@ -4,6 +4,7 @@ import SortView from "../view/sort-view";
 
 import PointView from "../view/point-view";
 import EditPointView from "../view/edit-point-view";
+import { RenderPosition, SortType } from "../const";
 
 const renderPoint = (taskListElement, point) => {
   const pointComponent = new PointView(point);
@@ -29,7 +30,10 @@ class TripPresenter {
 
   #taskListContainter = null;
   #points = null;
+
   #sortComponent = new SortView();
+  #currentSortType = SortType.DAY;
+
   #listComponent = new ListView();
 
   constructor(taskListContainter) {
@@ -38,10 +42,41 @@ class TripPresenter {
 
   init = (points) => {
     this.#points = [...points];
-    render(this.#taskListContainter, this.#sortComponent.element);
+    this._renderSort();
     render(this.#taskListContainter, this.#listComponent.element);
 
+    this._sortPoints(this.#currentSortType);
+    this._renderPoints();
+  }
+
+  _renderPoints = () => {
     this.#points.forEach((point) => renderPoint(this.#listComponent.element, point));
+  }
+
+  _renderSort = () => {
+    render(this.#taskListContainter, this.#sortComponent.element, RenderPosition.AFTERBEGIN);
+    this.#sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
+  }
+
+  _handleSortTypeChange = (sortType) => {
+    if (sortType === this.#currentSortType) {
+      return;
+    }
+
+    this._sortPoints(sortType);
+    this.#listComponent.element.innerHTML = '';
+    this._renderPoints();
+  }
+
+  _sortPoints = (sortType) => {
+    // switch (sortType) {
+    //   case SortType.DAY:
+    //     this.#points.sort((a, b) => a.dateFrom - b.dateFrom);
+    //     break;
+    //   case SortType.PRICE:
+    //     this.#points.sort((a, b) => a.basePrice - b.basePrice);
+    //     break;
+    // }
   }
 
 }
