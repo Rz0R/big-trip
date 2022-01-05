@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { TimeForFormat } from './const';
 
 export const formatDuration = (minutes) => {
@@ -30,3 +31,5 @@ export const getRandomInteger = (a = 0, b = 1) => {
 
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
+
+export const getDuration = (dateFrom, dateTo) => dayjs(dateTo).diff(dayjs(dateFrom), 'minute');

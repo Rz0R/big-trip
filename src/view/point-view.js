@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { formatDuration } from '../utils';
+import { formatDuration, getDuration } from '../utils';
 import AbstractView from './abstract-view';
 
 const createOfferMarkup = (title, price) => (
@@ -12,7 +12,7 @@ const createOfferMarkup = (title, price) => (
 
 const createPointTemplate = ({ type, city, offers, dateFrom, dateTo, isFavorite, basePrice }) => {
 
-  const duration = dayjs(dateTo).diff(dayjs(dateFrom), 'minute');
+  const duration = getDuration(dateFrom, dateTo);
   const offersMarkup = offers.map(({ title, price }) => createOfferMarkup(title, price)).join('\n');
 
   return (

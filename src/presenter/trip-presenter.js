@@ -2,6 +2,9 @@ import { render, replace } from "../render";
 import ListView from "../view/list-view";
 import SortView from "../view/sort-view";
 
+import dayjs from "dayjs";
+import { getDuration } from "../utils";
+
 import PointView from "../view/point-view";
 import EditPointView from "../view/edit-point-view";
 import { RenderPosition, SortType } from "../const";
@@ -63,20 +66,24 @@ class TripPresenter {
       return;
     }
 
+    this.#currentSortType = sortType;
     this._sortPoints(sortType);
     this.#listComponent.element.innerHTML = '';
     this._renderPoints();
   }
 
   _sortPoints = (sortType) => {
-    // switch (sortType) {
-    //   case SortType.DAY:
-    //     this.#points.sort((a, b) => a.dateFrom - b.dateFrom);
-    //     break;
-    //   case SortType.PRICE:
-    //     this.#points.sort((a, b) => a.basePrice - b.basePrice);
-    //     break;
-    // }
+    switch (sortType) {
+      case SortType.DAY:
+        this.#points.sort((a, b) => dayjs(a.dateFrom).toDate() - dayjs(b.dateFrom).toDate());
+        break;
+      case SortType.TIME:
+        this.#points.sort((a, b) => getDuration(a.dateFrom, a.dateTo) - getDuration(b.dateFrom, b.dateTo));
+        break;
+      case SortType.PRICE:
+        this.#points.sort((a, b) => a.basePrice - b.basePrice);
+        break;
+    }
   }
 
 }
