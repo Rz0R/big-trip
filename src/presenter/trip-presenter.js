@@ -1,37 +1,15 @@
-import { render, replace } from "../render";
+import { render } from "../render";
 import ListView from "../view/list-view";
 import SortView from "../view/sort-view";
+import PointPresenter from "./point-presenter";
 
 import dayjs from "dayjs";
 import { getDuration } from "../utils";
-
-import PointView from "../view/point-view";
-import EditPointView from "../view/edit-point-view";
 import { RenderPosition, SortType } from "../const";
-
-const renderPoint = (taskListElement, point) => {
-  const pointComponent = new PointView(point);
-  const editPointComponent = new EditPointView(point);
-
-  const replaceEventToForm = () => {
-    replace(editPointComponent.element, pointComponent.element);
-  };
-
-  const replaceFormToEvent = () => {
-    replace(pointComponent.element, editPointComponent.element);
-  };
-
-  pointComponent.setPointEditClickHandler(replaceEventToForm);
-
-  editPointComponent.setFormSubmitHandler(replaceFormToEvent);
-  editPointComponent.setFormResetHandler(replaceFormToEvent);
-
-  render(taskListElement, pointComponent.element);
-};
 
 class TripPresenter {
 
-  #taskListContainter = null;
+  #boardContainter = null;
   #points = null;
 
   #sortComponent = new SortView();
@@ -39,25 +17,30 @@ class TripPresenter {
 
   #listComponent = new ListView();
 
-  constructor(taskListContainter) {
-    this.#taskListContainter = taskListContainter;
+  constructor(boardContainter) {
+    this.#boardContainter = boardContainter;
   }
 
   init = (points) => {
     this.#points = [...points];
     this._renderSort();
-    render(this.#taskListContainter, this.#listComponent.element);
+    render(this.#boardContainter, this.#listComponent);
 
     this._sortPoints(this.#currentSortType);
     this._renderPoints();
   }
 
+  _renderPoint = (point) => {
+    const pointPresenter = new PointPresenter(this.#listComponent);
+    pointPresenter.init(point);
+  }
+
   _renderPoints = () => {
-    this.#points.forEach((point) => renderPoint(this.#listComponent.element, point));
+    this.#points.forEach((point) => this._renderPoint(point));
   }
 
   _renderSort = () => {
-    render(this.#taskListContainter, this.#sortComponent.element, RenderPosition.AFTERBEGIN);
+    render(this.#boardContainter, this.#sortComponent.element, RenderPosition.AFTERBEGIN);
     this.#sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
