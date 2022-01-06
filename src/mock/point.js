@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { nanoid } from 'nanoid';
 import { getRandomInteger } from '../utils';
 import { CITIES } from '../const';
 import { TYPES } from '../const';
@@ -75,6 +76,8 @@ const generatePhotos = () => {
 
 export const generatePoint = () => {
 
+  const id = nanoid();
+
   const dateFrom = generateRandomDate(new Date(), dayjs().add(5, 'day').toDate());
   const dateTo = generateRandomDate(dayjs(dateFrom).toDate(), dayjs(dateFrom).add(5, 'day').toDate());
 
@@ -90,6 +93,7 @@ export const generatePoint = () => {
   const photos = generatePhotos();
 
   return {
+    id,
     type,
     city,
     offers,

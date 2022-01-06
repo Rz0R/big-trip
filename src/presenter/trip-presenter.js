@@ -17,6 +17,8 @@ class TripPresenter {
 
   #listComponent = new ListView();
 
+  #pointPresenters = new Map();
+
   constructor(boardContainter) {
     this.#boardContainter = boardContainter;
   }
@@ -28,11 +30,13 @@ class TripPresenter {
 
     this._sortPoints(this.#currentSortType);
     this._renderPoints();
+    console.log(this.#pointPresenters);
   }
 
   _renderPoint = (point) => {
     const pointPresenter = new PointPresenter(this.#listComponent);
     pointPresenter.init(point);
+    this.#pointPresenters.set(point.id, pointPresenter);
   }
 
   _renderPoints = () => {
@@ -51,7 +55,7 @@ class TripPresenter {
 
     this.#currentSortType = sortType;
     this._sortPoints(sortType);
-    this.#listComponent.element.innerHTML = '';
+    this._clearPointList();
     this._renderPoints();
   }
 
@@ -67,6 +71,11 @@ class TripPresenter {
         this.#points.sort((a, b) => a.basePrice - b.basePrice);
         break;
     }
+  }
+
+  _clearPointList = () => {
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointPresenters.clear();
   }
 
 }

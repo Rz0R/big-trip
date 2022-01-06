@@ -1,6 +1,6 @@
 import PointView from "../view/point-view";
 import EditPointView from "../view/edit-point-view";
-import { render, replace } from "../render";
+import { remove, render, replace } from "../render";
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -34,6 +34,11 @@ class PointPresenter {
     render(this.#taskListContainer, this.#pointComponent)
   }
 
+  destroy = () => {
+    remove(this.#pointComponent);
+    remove(this.#editComponent);
+  }
+
   _replaceFormToEvent = () => {
     replace(this.#pointComponent, this.#editComponent);
   }
@@ -41,6 +46,7 @@ class PointPresenter {
   _replaceEventToForm = () => {
     replace(this.#editComponent, this.#pointComponent);
   }
+
 
 }
 
