@@ -29,6 +29,7 @@ class PointPresenter {
 
     this.#pointComponent.setPointEditClickHandler(this._replaceEventToForm);
     this.#editComponent.setFormSubmitHandler(this._replaceFormToEvent);
+    this.#pointComponent.setFavoriteClickHandler(() => console.log('click favorite!'));
 
     render(this.#taskListContainer, this.#pointComponent)
   }

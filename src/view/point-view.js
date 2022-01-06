@@ -64,13 +64,23 @@ class PointView extends AbstractView {
   }
 
   setPointEditClickHandler = (callback) => {
-    this._callback.editClickHandler = callback;
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this._pointEditClickHandler);
+    this._callback.editClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this._editClickHandler);
   }
 
-  _pointEditClickHandler = (evt) => {
+  _editClickHandler = (evt) => {
     evt.preventDefault();
-    this._callback.editClickHandler();
+    this._callback.editClick();
+  }
+
+  setFavoriteClickHandler = (callback) => {
+    this._callback.favoriteClick = callback;
+    this.element.querySelector('.event__favorite-btn').addEventListener('click', this._favoriteClickHandler);
+  }
+
+  _favoriteClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.favoriteClick();
   }
 }
 
