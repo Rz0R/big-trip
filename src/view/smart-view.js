@@ -1,4 +1,4 @@
-import AbstractView from "./abstract-view";
+import AbstractView from './abstract-view';
 
 class SmartView extends AbstractView {
 
@@ -24,6 +24,8 @@ class SmartView extends AbstractView {
     const prevElement = this.element;
     const parent = prevElement.parentElement;
     this.removeElement();
+
+    const newElement = this.element;
 
     parent.replaceChild(newElement, prevElement);
 

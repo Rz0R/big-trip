@@ -1,11 +1,13 @@
-import PointView from "../view/point-view";
-import EditPointView from "../view/edit-point-view";
-import { remove, render, replace } from "../utils/render";
+import PointView from '../view/point-view';
+import EditPointView from '../view/edit-point-view';
+import { remove, render, replace } from '../utils/render';
+
+import { generateDescription } from '../mock/point';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
   EDITING: 'EDITING'
-}
+};
 
 class PointPresenter {
 
@@ -36,6 +38,7 @@ class PointPresenter {
     this.#pointComponent.setPointEditClickHandler(this._replaceEventToForm);
     this.#editComponent.setFormSubmitHandler(this._replaceFormToEvent);
     this.#pointComponent.setFavoriteClickHandler(this._handleFavoriteClick);
+    this.#editComponent.setCityChangeHadler(this._handleCityChange);
 
     if (prevPointComponent === null || prevEditComponent === null) {
       render(this.#taskListContainer, this.#pointComponent);
@@ -71,6 +74,11 @@ class PointPresenter {
 
   _handleFavoriteClick = () => {
     this.#changeData({ ...this.#point, isFavorite: !this.#point.isFavorite });
+  }
+
+  _handleCityChange = (city) => {
+    const description = generateDescription();
+    this.#changeData({...this.#point, city, description});
   }
 }
 

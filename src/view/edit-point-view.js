@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view';
+import SmartView from './smart-view';
 
 import dayjs from 'dayjs';
 import { getRandomInteger } from '../utils/common';
@@ -139,7 +139,7 @@ const creatEditPointTemplate = ({
   );
 };
 
-class EditPointView extends AbstractView {
+class EditPointView extends SmartView {
   #point = null;
 
   constructor(point) {
@@ -169,6 +169,16 @@ class EditPointView extends AbstractView {
   _formResetHandler = (evt) => {
     evt.preventDefault();
     this._callback.formReset();
+  }
+
+  setCityChangeHadler = (callback) => {
+    this._callback.cityChange = callback;
+    this.element.querySelector('.event__input--destination').addEventListener('change', this._cityChangeHadler);
+  }
+
+  _cityChangeHadler = (evt) => {
+    evt.preventDefault();
+    this._callback.cityChange(evt.target.value);
   }
 
 }

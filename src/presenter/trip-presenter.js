@@ -1,11 +1,11 @@
-import { render } from "../utils/render";
-import ListView from "../view/list-view";
-import SortView from "../view/sort-view";
-import PointPresenter from "./point-presenter";
+import { render } from '../utils/render';
+import ListView from '../view/list-view';
+import SortView from '../view/sort-view';
+import PointPresenter from './point-presenter';
 
-import dayjs from "dayjs";
-import { getDuration, updateItem } from "../utils/common";
-import { RenderPosition, SortType } from "../const";
+import dayjs from 'dayjs';
+import { getDuration, updateItem } from '../utils/common';
+import { RenderPosition, SortType } from '../const';
 
 class TripPresenter {
 

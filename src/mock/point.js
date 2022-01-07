@@ -52,7 +52,7 @@ const generateOffers = () => {
   return [...res];
 };
 
-const generateDescription = () => {
+export const generateDescription = () => {
   const descriptions = [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget.',
     'Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra.',
