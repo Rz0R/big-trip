@@ -39,6 +39,7 @@ class PointPresenter {
     this.#editComponent.setFormSubmitHandler(this._replaceFormToEvent);
     this.#pointComponent.setFavoriteClickHandler(this._handleFavoriteClick);
     this.#editComponent.setCityChangeHadler(this._handleCityChange);
+    this.#editComponent.setTypeChangeHandler(this._hadleTypeChange);
 
     if (prevPointComponent === null || prevEditComponent === null) {
       render(this.#taskListContainer, this.#pointComponent);
@@ -78,7 +79,12 @@ class PointPresenter {
 
   _handleCityChange = (city) => {
     const description = generateDescription();
-    this.#changeData({...this.#point, city, description});
+    this.#changeData({ ...this.#point, city, description });
+  }
+
+  _hadleTypeChange = (type) => {
+    this.#changeData({ ...this.#point, type });
+
   }
 }
 

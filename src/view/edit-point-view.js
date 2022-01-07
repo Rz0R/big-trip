@@ -181,6 +181,16 @@ class EditPointView extends SmartView {
     this._callback.cityChange(evt.target.value);
   }
 
+  setTypeChangeHandler = (callback) => {
+    this._callback.cityChange = callback;
+    this.element.querySelector('.event__type-group').addEventListener('change', this._typeChangeHandler);
+  }
+
+  _typeChangeHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.cityChange(evt.target.value);
+  }
+
 }
 
 export default EditPointView;
