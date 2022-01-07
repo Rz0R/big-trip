@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { formatDuration, getDuration } from '../utils';
+import { formatDuration, getDuration } from '../utils/common';
 import AbstractView from './abstract-view';
 
 const createOfferMarkup = (title, price) => (

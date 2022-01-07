@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { nanoid } from 'nanoid';
-import { getRandomInteger } from '../utils';
+import { getRandomInteger } from '../utils/common';
 import { CITIES } from '../const';
 import { TYPES } from '../const';
 

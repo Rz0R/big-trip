@@ -1,4 +1,3 @@
-import { createElement } from '../render';
 import AbstractView from './abstract-view';
 
 const createTripInfoHeaderTemplate = () => (

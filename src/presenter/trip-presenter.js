@@ -1,10 +1,10 @@
-import { render } from "../render";
+import { render } from "../utils/render";
 import ListView from "../view/list-view";
 import SortView from "../view/sort-view";
 import PointPresenter from "./point-presenter";
 
 import dayjs from "dayjs";
-import { getDuration } from "../utils";
+import { getDuration, updateItem } from "../utils/common";
 import { RenderPosition, SortType } from "../const";
 
 class TripPresenter {
@@ -30,17 +30,21 @@ class TripPresenter {
 
     this._sortPoints(this.#currentSortType);
     this._renderPoints();
-    console.log(this.#pointPresenters);
   }
 
   _renderPoint = (point) => {
-    const pointPresenter = new PointPresenter(this.#listComponent);
+    const pointPresenter = new PointPresenter(this.#listComponent, this._onDataChange);
     pointPresenter.init(point);
     this.#pointPresenters.set(point.id, pointPresenter);
   }
 
   _renderPoints = () => {
     this.#points.forEach((point) => this._renderPoint(point));
+  }
+
+  _onDataChange = (updatedPoint) => {
+    this.#points = updateItem(this.#points, updatedPoint);
+    this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
   }
 
   _renderSort = () => {

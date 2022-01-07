@@ -1,7 +1,7 @@
 import AbstractView from './abstract-view';
 
 import dayjs from 'dayjs';
-import { getRandomInteger } from '../utils';
+import { getRandomInteger } from '../utils/common';
 import { TYPES } from '../const';
 
 const createOfferMarkup = (title, price, ind, isChecked = false) => {

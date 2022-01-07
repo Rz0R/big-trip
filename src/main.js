@@ -3,7 +3,7 @@ import TripInfoView from './view/trip-info-view';
 import PriceView from './view/price-view';
 import MenuView from './view/menu-view';
 import FilterView from './view/filter-view';
-import { render } from './render';
+import { render } from './utils/render';
 import { RenderPosition } from './const';
 import { generatePoint } from './mock/point';
 

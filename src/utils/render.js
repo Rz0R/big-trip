@@ -1,5 +1,5 @@
-import { RenderPosition } from './const';
-import AbstractView from './view/abstract-view';
+import { RenderPosition } from '../const';
+import AbstractView from '../view/abstract-view';
 
 export const render = (container, element, place = RenderPosition.BEFOREEND) => {
 
