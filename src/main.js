@@ -9,7 +9,7 @@ import { generatePoint } from './mock/point';
 
 import TripPresenter from './presenter/trip-presenter';
 
-const POINT_COUNT = 10;
+const POINT_COUNT = 1;
 const points = Array.from({ length: POINT_COUNT }, generatePoint);
 
 const renderHeader = () => {

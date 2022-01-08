@@ -1,5 +1,16 @@
 import SmartView from './smart-view';
 
+const DEFAULT_POINT = {
+  type: 'taxi',
+  dateFrom: dayjs(),
+  dateTo: dayjs(),
+  offers: [],
+  city: 'Moscow',
+  basePrice: 100,
+  description: '',
+  photos: []
+};
+
 import dayjs from 'dayjs';
 import { getRandomInteger } from '../utils/common';
 import { TYPES } from '../const';
@@ -51,16 +62,7 @@ const createPhotoMarkup = (url) => (
   `<img class="event__photo" src="${url}" alt="Event photo">`
 );
 
-const creatEditPointTemplate = ({
-  type = 'taxi',
-  dateFrom = dayjs(),
-  dateTo = dayjs(),
-  offers = [],
-  city = 'Moscow',
-  basePrice = 100,
-  description = '',
-  photos = []
-}) => {
+const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, city, basePrice, description, photos }) => {
 
   const offerEls = offers.map((offer, ind) => {
     const { title, price } = offer;
@@ -140,15 +142,14 @@ const creatEditPointTemplate = ({
 };
 
 class EditPointView extends SmartView {
-  #point = null;
 
-  constructor(point) {
+  constructor(point = DEFAULT_POINT) {
     super();
-    this.#point = point;
+    this._data = { ...point };
   }
 
   get template() {
-    return creatEditPointTemplate(this.#point);
+    return creatEditPointTemplate(this._data);
   }
 
   setFormSubmitHandler = (callback) => {
@@ -182,13 +183,13 @@ class EditPointView extends SmartView {
   }
 
   setTypeChangeHandler = (callback) => {
-    this._callback.cityChange = callback;
+    this._callback.typeChange = callback;
     this.element.querySelector('.event__type-group').addEventListener('change', this._typeChangeHandler);
   }
 
   _typeChangeHandler = (evt) => {
     evt.preventDefault();
-    this._callback.cityChange(evt.target.value);
+    this._callback.typeChange(evt.target.value);
   }
 
 }
