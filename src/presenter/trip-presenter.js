@@ -33,7 +33,7 @@ class TripPresenter {
   }
 
   _renderPoint = (point) => {
-    const pointPresenter = new PointPresenter(this.#listComponent, this._onDataChange);
+    const pointPresenter = new PointPresenter(this.#listComponent, this._onDataChange, this._handleModeChange);
     pointPresenter.init(point);
     this.#pointPresenters.set(point.id, pointPresenter);
   }
@@ -80,6 +80,10 @@ class TripPresenter {
   _clearPointList = () => {
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
     this.#pointPresenters.clear();
+  }
+
+  _handleModeChange = () => {
+    this.#pointPresenters.forEach((presenter) => presenter.setDefaultView());
   }
 
 }

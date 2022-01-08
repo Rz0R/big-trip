@@ -20,10 +20,12 @@ class PointPresenter {
   #mode = Mode.DEFAULT;
 
   #changeData = null;
+  #changeMode = null;
 
-  constructor(taskListContainer, changeData) {
+  constructor(taskListContainer, changeData, changeMode) {
     this.#taskListContainer = taskListContainer;
     this.#changeData = changeData;
+    this.#changeMode = changeMode;
   }
 
   init = (point) => {
@@ -63,7 +65,11 @@ class PointPresenter {
     remove(this.#editComponent);
   }
 
-
+  setDefaultView = () => {
+    if (this.#mode !== Mode.DEFAULT) {
+      this._replaceFormToEvent();
+    }
+  }
 
   _replaceFormToEvent = () => {
     replace(this.#pointComponent, this.#editComponent);
@@ -72,6 +78,7 @@ class PointPresenter {
 
   _replaceEventToForm = () => {
     replace(this.#editComponent, this.#pointComponent);
+    this.#changeMode();
     this.#mode = Mode.EDITING;
   }
 
