@@ -1,5 +1,9 @@
 import SmartView from './smart-view';
 
+import flatpickr from 'flatpickr';
+
+import '../../node_modules/flatpickr/dist/flatpickr.min.css';
+
 const DEFAULT_POINT = {
   type: 'taxi',
   dateFrom: dayjs(),
@@ -143,53 +147,117 @@ const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, city, basePric
 
 class EditPointView extends SmartView {
 
+  #datepickerFrom = null;
+  #datepickerTo = null;
+
   constructor(point = DEFAULT_POINT) {
     super();
     this._data = { ...point };
+    this.#setDatepickerFrom();
+    this.#setDatepickerTo();
   }
 
   get template() {
     return creatEditPointTemplate(this._data);
   }
 
-  setFormSubmitHandler = (callback) => {
-    this._callback.formSubmit = callback;
-    this.element.querySelector('form').addEventListener('submit', this._formSubmitHandler);
+  removeElement = () => {
+    super.removeElement();
+
+    if (this.#datepickerFrom || this.#datepickerTo) {
+      this.#datepickerFrom.destroy();
+      this.#datepickerFrom = null;
+      this.#datepickerTo.destroy();
+      this.#datepickerTo = null;
+    }
   }
 
-  _formSubmitHandler = (evt) => {
+  restoreHandlers = () => {
+    this.#setDatepickerFrom();
+    this.#setDatepickerTo();
+
+    this.element.querySelector('.event__type-group').addEventListener('change', this.#typeChangeHandler);
+    this.element.querySelector('.event__input--destination').addEventListener('change', this.#cityChangeHadler);
+    this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
+    this.element.querySelector('form').addEventListener('reset', this.#formResetHandler);
+  }
+
+  setFormSubmitHandler = (callback) => {
+    this._callback.formSubmit = callback;
+    this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
+  }
+
+  #formSubmitHandler = (evt) => {
     evt.preventDefault();
     this._callback.formSubmit();
   }
 
   setFormResetHandler = (callback) => {
     this._callback.formReset = callback;
-    this.element.querySelector('form').addEventListener('reset', this._formResetHandler);
+    this.element.querySelector('form').addEventListener('reset', this.#formResetHandler);
   }
 
-  _formResetHandler = (evt) => {
+  #formResetHandler = (evt) => {
     evt.preventDefault();
     this._callback.formReset();
   }
 
   setCityChangeHadler = (callback) => {
     this._callback.cityChange = callback;
-    this.element.querySelector('.event__input--destination').addEventListener('change', this._cityChangeHadler);
+    this.element.querySelector('.event__input--destination').addEventListener('change', this.#cityChangeHadler);
   }
 
-  _cityChangeHadler = (evt) => {
+  #cityChangeHadler = (evt) => {
     evt.preventDefault();
     this._callback.cityChange(evt.target.value);
   }
 
   setTypeChangeHandler = (callback) => {
     this._callback.typeChange = callback;
-    this.element.querySelector('.event__type-group').addEventListener('change', this._typeChangeHandler);
+    this.element.querySelector('.event__type-group').addEventListener('change', this.#typeChangeHandler);
   }
 
-  _typeChangeHandler = (evt) => {
+  #typeChangeHandler = (evt) => {
     evt.preventDefault();
     this._callback.typeChange(evt.target.value);
+  }
+
+  #setDatepickerFrom = () => {
+    this.#datepickerFrom = flatpickr(
+      this.element.querySelector('#event-start-time-1'),
+      {
+        dateFormat: 'd/m/Y H:i',
+        enableTime: true,
+        allowInput: true,
+        defaultDate: dayjs(this._data.dateFrom).format('DD/MM/YYYY HH:mm'),
+        onClose: this.#updateFromDate
+      },
+    )
+  }
+
+  #updateFromDate = ([userDate]) => {
+    this.updateData({
+      dateFrom: userDate.toISOString()
+    })
+  }
+
+  #setDatepickerTo = () => {
+    this.#datepickerTo = flatpickr(
+      this.element.querySelector('#event-end-time-1'),
+      {
+        dateFormat: 'd/m/Y H:i',
+        enableTime: true,
+        allowInput: true,
+        defaultDate: dayjs(this._data.dateTo).format('DD/MM/YYYY HH:mm'),
+        onClose: this.#updateToDate
+      },
+    )
+  }
+
+  #updateToDate = ([userDate]) => {
+    this.updateData({
+      dateTo: userDate.toISOString()
+    })
   }
 
 }
