@@ -4,6 +4,10 @@ import flatpickr from 'flatpickr';
 
 import '../../node_modules/flatpickr/dist/flatpickr.min.css';
 
+import dayjs from 'dayjs';
+import { getRandomInteger } from '../utils/common';
+import { TYPES } from '../const';
+
 const DEFAULT_POINT = {
   type: 'taxi',
   dateFrom: dayjs(),
@@ -14,10 +18,6 @@ const DEFAULT_POINT = {
   description: '',
   photos: []
 };
-
-import dayjs from 'dayjs';
-import { getRandomInteger } from '../utils/common';
-import { TYPES } from '../const';
 
 const createOfferMarkup = (title, price, ind, isChecked = false) => {
 
@@ -153,8 +153,7 @@ class EditPointView extends SmartView {
   constructor(point = DEFAULT_POINT) {
     super();
     this._data = { ...point };
-    this.#setDatepickerFrom();
-    this.#setDatepickerTo();
+    this.#setInnerHandlers();
   }
 
   get template() {
@@ -172,12 +171,16 @@ class EditPointView extends SmartView {
     }
   }
 
-  restoreHandlers = () => {
+  #setInnerHandlers = () => {
     this.#setDatepickerFrom();
     this.#setDatepickerTo();
-
     this.element.querySelector('.event__type-group').addEventListener('change', this.#typeChangeHandler);
     this.element.querySelector('.event__input--destination').addEventListener('change', this.#cityChangeHadler);
+  }
+
+  restoreHandlers = () => {
+    this.#setInnerHandlers();
+
     this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
     this.element.querySelector('form').addEventListener('reset', this.#formResetHandler);
   }
@@ -189,7 +192,7 @@ class EditPointView extends SmartView {
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this._callback.formSubmit();
+    this._callback.formSubmit({ ...this._data });
   }
 
   setFormResetHandler = (callback) => {
@@ -202,24 +205,18 @@ class EditPointView extends SmartView {
     this._callback.formReset();
   }
 
-  setCityChangeHadler = (callback) => {
-    this._callback.cityChange = callback;
-    this.element.querySelector('.event__input--destination').addEventListener('change', this.#cityChangeHadler);
-  }
-
   #cityChangeHadler = (evt) => {
     evt.preventDefault();
-    this._callback.cityChange(evt.target.value);
-  }
-
-  setTypeChangeHandler = (callback) => {
-    this._callback.typeChange = callback;
-    this.element.querySelector('.event__type-group').addEventListener('change', this.#typeChangeHandler);
+    this.updateData({
+      city: evt.target.value
+    });
   }
 
   #typeChangeHandler = (evt) => {
     evt.preventDefault();
-    this._callback.typeChange(evt.target.value);
+    this.updateData({
+      type: evt.target.value
+    });
   }
 
   #setDatepickerFrom = () => {
@@ -232,13 +229,13 @@ class EditPointView extends SmartView {
         defaultDate: dayjs(this._data.dateFrom).format('DD/MM/YYYY HH:mm'),
         onClose: this.#updateFromDate
       },
-    )
+    );
   }
 
   #updateFromDate = ([userDate]) => {
     this.updateData({
       dateFrom: userDate.toISOString()
-    })
+    });
   }
 
   #setDatepickerTo = () => {
@@ -251,13 +248,13 @@ class EditPointView extends SmartView {
         defaultDate: dayjs(this._data.dateTo).format('DD/MM/YYYY HH:mm'),
         onClose: this.#updateToDate
       },
-    )
+    );
   }
 
   #updateToDate = ([userDate]) => {
     this.updateData({
       dateTo: userDate.toISOString()
-    })
+    });
   }
 
 }

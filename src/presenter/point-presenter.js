@@ -2,7 +2,7 @@ import PointView from '../view/point-view';
 import EditPointView from '../view/edit-point-view';
 import { remove, render, replace } from '../utils/render';
 
-import { generateDescription } from '../mock/point';
+// import { generateDescription } from '../mock/point';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -37,11 +37,9 @@ class PointPresenter {
     this.#pointComponent = new PointView(this.#point);
     this.#editComponent = new EditPointView(this.#point);
 
-    this.#pointComponent.setPointEditClickHandler(this._replaceEventToForm);
-    this.#editComponent.setFormSubmitHandler(this._replaceFormToEvent);
-    this.#pointComponent.setFavoriteClickHandler(this._handleFavoriteClick);
-    this.#editComponent.setCityChangeHadler(this._handleCityChange);
-    this.#editComponent.setTypeChangeHandler(this._handleTypeChange);
+    this.#pointComponent.setPointEditClickHandler(this.#replaceEventToForm);
+    this.#editComponent.setFormSubmitHandler(this.#hadleFormSubmit);
+    this.#pointComponent.setFavoriteClickHandler(this.#handleFavoriteClick);
 
     if (prevPointComponent === null || prevEditComponent === null) {
       render(this.#taskListContainer, this.#pointComponent);
@@ -71,28 +69,24 @@ class PointPresenter {
     }
   }
 
-  _replaceFormToEvent = () => {
+  #hadleFormSubmit = (updatedPoint) => {
+    this.#changeData(updatedPoint);
+    this.#replaceFormToEvent();
+  }
+
+  #replaceFormToEvent = () => {
     replace(this.#pointComponent, this.#editComponent);
     this.#mode = Mode.DEFAULT;
   }
 
-  _replaceEventToForm = () => {
+  #replaceEventToForm = () => {
     replace(this.#editComponent, this.#pointComponent);
     this.#changeMode();
     this.#mode = Mode.EDITING;
   }
 
-  _handleFavoriteClick = () => {
+  #handleFavoriteClick = () => {
     this.#changeData({ ...this.#point, isFavorite: !this.#point.isFavorite });
-  }
-
-  _handleCityChange = (city) => {
-    const description = generateDescription();
-    this.#changeData({ ...this.#point, city, description });
-  }
-
-  _handleTypeChange = (type) => {
-    this.#changeData({ ...this.#point, type });
   }
 }
 
