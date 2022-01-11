@@ -15,9 +15,9 @@ const createFiterItemMarkup = (filter, isChecked) => {
         value="${name}"
         ${isChecked ? 'checked' : ''}
       >
-      <label class="trip-filters__filter-label" for="filter-${name}">${name} ${count}</label>
+      <label class="trip-filters__filter-label" for="filter-${name}">${name}(${count})</label>
     </div>`);
-}
+};
 
 const createFitersTemplate = (filterItems) => {
 

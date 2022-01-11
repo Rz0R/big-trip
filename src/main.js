@@ -5,12 +5,15 @@ import MenuView from './view/menu-view';
 import FilterView from './view/filter-view';
 import { render } from './utils/render';
 import { RenderPosition } from './const';
+
 import { generatePoint } from './mock/point';
+import { generateFilter } from './mock/filter';
 
 import TripPresenter from './presenter/trip-presenter';
 
 const POINT_COUNT = 10;
 const points = Array.from({ length: POINT_COUNT }, generatePoint);
+const filters = generateFilter(points);
 
 const renderHeader = () => {
   const siteTripMainElement = document.querySelector('.trip-main');
@@ -29,8 +32,8 @@ const renderHeader = () => {
   render(siteTripMenuElement, menuComponent.element);
 
   const siteTripFiltersElement = siteTripMainElement.querySelector('.trip-controls__filters');
-  // const filterComponent = new FilterView();
-  // render(siteTripFiltersElement, filterComponent.element);
+  const filterComponent = new FilterView(filters);
+  render(siteTripFiltersElement, filterComponent.element);
 };
 
 renderHeader();

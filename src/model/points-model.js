@@ -1,4 +1,4 @@
-import AbstractObservable from "./abstract-observable";
+import AbstractObservable from './abstract-observable';
 
 class PointsModel extends AbstractObservable {
 

@@ -78,7 +78,7 @@ export const generatePoint = () => {
 
   const id = nanoid();
 
-  const dateFrom = generateRandomDate(new Date(), dayjs().add(5, 'day').toDate());
+  const dateFrom = generateRandomDate(dayjs().subtract(3, 'day').toDate(), dayjs().add(3, 'day').toDate());
   const dateTo = generateRandomDate(dayjs(dateFrom).toDate(), dayjs(dateFrom).add(5, 'day').toDate());
 
   const type = generateType();
