@@ -29,8 +29,8 @@ const renderHeader = () => {
   render(siteTripMenuElement, menuComponent.element);
 
   const siteTripFiltersElement = siteTripMainElement.querySelector('.trip-controls__filters');
-  const filterComponent = new FilterView();
-  render(siteTripFiltersElement, filterComponent.element);
+  // const filterComponent = new FilterView();
+  // render(siteTripFiltersElement, filterComponent.element);
 };
 
 renderHeader();
