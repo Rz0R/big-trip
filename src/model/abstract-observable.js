@@ -1,11 +1,11 @@
 class AbstractObservable {
   #observers = new Set();
 
-  addOservers = (observer) => {
+  addObserver = (observer) => {
     this.#observers.add(observer);
   }
 
-  removeObservers = (observer) => {
+  removeObserver = (observer) => {
     this.#observers.delete(observer);
   }
 

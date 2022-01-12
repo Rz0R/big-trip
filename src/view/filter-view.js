@@ -49,6 +49,15 @@ class FitersView extends AbstractView {
     return createFitersTemplate(this.#filters, this.#activeFilter);
   }
 
+  setFiterTypeChangeHandler = (callback) => {
+    this._callback.filterTypeChange = callback;
+    this.element.addEventListener('change', this.#filterTypeChangeHandler);
+  }
+
+  #filterTypeChangeHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.filterTypeChange(evt.target.value);
+  }
 }
 
 export default FitersView;
