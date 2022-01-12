@@ -11,9 +11,14 @@ import { generateFilter } from './mock/filter';
 
 import TripPresenter from './presenter/trip-presenter';
 
+import PointsModel from './model/points-model';
+
 const POINT_COUNT = 10;
 const points = Array.from({ length: POINT_COUNT }, generatePoint);
 const filters = generateFilter(points);
+
+const pointsModel  = new PointsModel();
+pointsModel.points = points;
 
 const renderHeader = () => {
   const siteTripMainElement = document.querySelector('.trip-main');
@@ -39,8 +44,8 @@ const renderHeader = () => {
 renderHeader();
 
 const siteTripEventsElement = document.querySelector('.trip-events');
-const tripPresenter = new TripPresenter(siteTripEventsElement);
+const tripPresenter = new TripPresenter(siteTripEventsElement, pointsModel);
 
-tripPresenter.init(points);
+tripPresenter.init();
 
 
