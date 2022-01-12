@@ -2,23 +2,24 @@ import TripInfoHeaderView from './view/trip-info-header-view';
 import TripInfoView from './view/trip-info-view';
 import PriceView from './view/price-view';
 import MenuView from './view/menu-view';
-import FilterView from './view/filter-view';
 import { render } from './utils/render';
 import { RenderPosition } from './const';
 
 import { generatePoint } from './mock/point';
-import { generateFilter } from './mock/filter';
 
 import TripPresenter from './presenter/trip-presenter';
+import FilterPresenter from './presenter/filter-presenter';
 
 import PointsModel from './model/points-model';
+import FilterModel from './model/filter-model';
 
 const POINT_COUNT = 10;
 const points = Array.from({ length: POINT_COUNT }, generatePoint);
-const filters = generateFilter(points);
 
-const pointsModel  = new PointsModel();
+const pointsModel = new PointsModel();
 pointsModel.points = points;
+
+const filterModel = new FilterModel();
 
 const renderHeader = () => {
   const siteTripMainElement = document.querySelector('.trip-main');
@@ -37,8 +38,8 @@ const renderHeader = () => {
   render(siteTripMenuElement, menuComponent.element);
 
   const siteTripFiltersElement = siteTripMainElement.querySelector('.trip-controls__filters');
-  const filterComponent = new FilterView(filters);
-  render(siteTripFiltersElement, filterComponent.element);
+  const filterPresenter = new FilterPresenter(siteTripFiltersElement, pointsModel, filterModel);
+  filterPresenter.init();
 };
 
 renderHeader();
@@ -47,5 +48,3 @@ const siteTripEventsElement = document.querySelector('.trip-events');
 const tripPresenter = new TripPresenter(siteTripEventsElement, pointsModel);
 
 tripPresenter.init();
-
-

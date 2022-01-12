@@ -33,6 +33,8 @@ class TripPresenter {
       case SortType.PRICE:
         return this.#pointsModel.points.sort((a, b) => a.basePrice - b.basePrice);
     }
+
+    return this.#pointsModel.points;
   }
 
   init = () => {

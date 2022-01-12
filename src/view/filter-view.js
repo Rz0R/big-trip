@@ -1,7 +1,7 @@
 import AbstractView from './abstract-view';
 
 
-const createFiterItemMarkup = (filter, isChecked) => {
+const createFiterItemMarkup = (filter, activeFilter) => {
   const { name, count } = filter;
 
   return (
@@ -13,16 +13,16 @@ const createFiterItemMarkup = (filter, isChecked) => {
         type="radio"
         name="trip-filter"
         value="${name}"
-        ${isChecked ? 'checked' : ''}
+        ${name === activeFilter ? 'checked' : ''}
       >
       <label class="trip-filters__filter-label" for="filter-${name}">${name}(${count})</label>
     </div>`);
 };
 
-const createFitersTemplate = (filterItems) => {
+const createFitersTemplate = (filterItems, activeFilter) => {
 
   const fiterItemsMarkup = filterItems
-    .map((filter, index) => createFiterItemMarkup(filter, index === 0))
+    .map((filter) => createFiterItemMarkup(filter, activeFilter))
     .join('\n');
 
   return (
@@ -37,14 +37,16 @@ const createFitersTemplate = (filterItems) => {
 class FitersView extends AbstractView {
 
   #filters = null;
+  #activeFilter = null;
 
-  constructor(fiters) {
+  constructor(fiters, activeFilter) {
     super();
     this.#filters = fiters;
+    this.#activeFilter = activeFilter;
   }
 
   get template() {
-    return createFitersTemplate(this.#filters);
+    return createFitersTemplate(this.#filters, this.#activeFilter);
   }
 
 }
