@@ -25,15 +25,15 @@ class FilterPresenter {
     return [
       {
         name: FilterType.EVERYTHING,
-        count: filter[FilterType.EVERYTHING](points)
+        count: filter[FilterType.EVERYTHING](points).length
       },
       {
         name: FilterType.FUTURE,
-        count: filter[FilterType.FUTURE](points)
+        count: filter[FilterType.FUTURE](points).length
       },
       {
         name: FilterType.PAST,
-        count: filter[FilterType.PAST](points)
+        count: filter[FilterType.PAST](points).length
       }
     ];
   }

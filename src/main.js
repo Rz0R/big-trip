@@ -45,6 +45,6 @@ const renderHeader = () => {
 renderHeader();
 
 const siteTripEventsElement = document.querySelector('.trip-events');
-const tripPresenter = new TripPresenter(siteTripEventsElement, pointsModel);
+const tripPresenter = new TripPresenter(siteTripEventsElement, pointsModel, filterModel);
 
 tripPresenter.init();

@@ -4,37 +4,49 @@ import SortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
 
 import dayjs from 'dayjs';
-import { getDuration, updateItem } from '../utils/common';
-import { RenderPosition, SortType } from '../const';
+import { getDuration } from '../utils/common';
+import { filter } from '../utils/fiter';
+import { RenderPosition, SortType} from '../const';
 
 class TripPresenter {
 
   #boardContainter = null;
   #pointsModel = null;
+  #filterModel = null;
 
   #sortComponent = new SortView();
   #currentSortType = SortType.DAY;
+  #filterType = null;
 
   #listComponent = new ListView();
 
   #pointPresenters = new Map();
 
-  constructor(boardContainter, pointsModel) {
+  constructor(boardContainter, pointsModel, filerModel) {
     this.#boardContainter = boardContainter;
     this.#pointsModel = pointsModel;
+    this.#filterModel = filerModel;
   }
 
   get points() {
+
+    this.#filterType = this.#filterModel.filter;
+    const points = this.#pointsModel.points;
+    const filteredPoints = filter[this.#filterType](points);
+
     switch (this.#currentSortType) {
       case SortType.DAY:
-        return this.#pointsModel.points.sort((a, b) => dayjs(a.dateFrom).toDate() - dayjs(b.dateFrom).toDate());
+        filteredPoints.sort((a, b) => dayjs(a.dateFrom).toDate() - dayjs(b.dateFrom).toDate());
+        break;
       case SortType.TIME:
-        return this.#pointsModel.points.sort((a, b) => getDuration(a.dateFrom, a.dateTo) - getDuration(b.dateFrom, b.dateTo));
+        filteredPoints.sort((a, b) => getDuration(a.dateFrom, a.dateTo) - getDuration(b.dateFrom, b.dateTo));
+        break;
       case SortType.PRICE:
-        return this.#pointsModel.points.sort((a, b) => a.basePrice - b.basePrice);
+        filteredPoints.sort((a, b) => a.basePrice - b.basePrice);
+        break;
     }
 
-    return this.#pointsModel.points;
+    return filteredPoints;
   }
 
   init = () => {
@@ -54,7 +66,7 @@ class TripPresenter {
   }
 
   #onDataChange = (updatedPoint) => {
-    this.#pointsModel.points = updateItem(this.points, updatedPoint);
+    this.#pointsModel.updatePoint(updatedPoint);
     this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
   }
 
