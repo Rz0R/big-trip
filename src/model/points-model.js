@@ -12,8 +12,7 @@ class PointsModel extends AbstractObservable {
     return this.#points;
   }
 
-  //   updatePoint = (updateType, update) => {
-  updatePoint = (update) => {
+  updatePoint = (updateType, update) => {
     const index = this.#points.findIndex((point) => point.id === update.id);
 
     if (index === -1) {
@@ -26,7 +25,7 @@ class PointsModel extends AbstractObservable {
       ...this.#points.slice(index + 1),
     ];
 
-    this._notify(update);
+    this._notify(updateType, update);
   }
 
   addPoint = (updateType, update) => {

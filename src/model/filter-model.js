@@ -9,9 +9,9 @@ class FilterModel extends AbstractObservable {
     return this.#activeFilter;
   }
 
-  set filter(filter) {
-    this.#activeFilter = filter;
-    this._notify(filter);
+  setFilter(UpdateType, filterType) {
+    this.#activeFilter = filterType;
+    this._notify(UpdateType, filterType);
   }
 }
 

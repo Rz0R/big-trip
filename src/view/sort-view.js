@@ -40,7 +40,6 @@ class SortView extends AbstractView {
   }
 
   get template() {
-    console.log(this.#currentSortType);
     return createSortTemplate(this.#currentSortType);
   }
 
@@ -50,7 +49,7 @@ class SortView extends AbstractView {
   }
 
   #sortTypeChangeHandler = (evt) => {
-    if (evt.target.tagName !== 'LABEL') {
+    if (!evt.target.dataset.sortType || evt.target.tagName !== 'LABEL') {
       return;
     }
 

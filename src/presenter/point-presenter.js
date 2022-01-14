@@ -1,8 +1,7 @@
 import PointView from '../view/point-view';
 import EditPointView from '../view/edit-point-view';
 import { remove, render, replace } from '../utils/render';
-
-// import { generateDescription } from '../mock/point';
+import { UpdateType, UserAction } from '../const';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -70,7 +69,7 @@ class PointPresenter {
   }
 
   #hadleFormSubmit = (updatedPoint) => {
-    this.#changeData(updatedPoint);
+    this.#changeData(UserAction.UPDATE_POINT, UpdateType.MAJOR, updatedPoint);
     this.#replaceFormToEvent();
   }
 
@@ -86,7 +85,7 @@ class PointPresenter {
   }
 
   #handleFavoriteClick = () => {
-    this.#changeData({ ...this.#point, isFavorite: !this.#point.isFavorite });
+    this.#changeData(UserAction.UPDATE_POINT, UpdateType.PATCH, { ...this.#point, isFavorite: !this.#point.isFavorite });
   }
 }
 

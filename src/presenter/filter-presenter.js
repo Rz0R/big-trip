@@ -2,7 +2,7 @@ import FiltersView from '../view/filter-view';
 import { remove, render, replace } from '../utils/render';
 import { filter } from '../utils/fiter';
 
-import { FilterType, RenderPosition } from '../const';
+import { FilterType, RenderPosition, UpdateType } from '../const';
 
 class FilterPresenter {
 
@@ -76,7 +76,7 @@ class FilterPresenter {
       return;
     }
 
-    this.#filterModel.filter = filterType;
+    this.#filterModel.setFilter(UpdateType.MINOR, filterType);
   }
 }
 

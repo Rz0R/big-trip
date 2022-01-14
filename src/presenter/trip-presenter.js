@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import { getDuration } from '../utils/common';
 import { filter } from '../utils/fiter';
 import { RenderPosition, SortType } from '../const';
+import { UserAction, UpdateType } from '../const';
 
 class TripPresenter {
 
@@ -53,13 +54,14 @@ class TripPresenter {
     this.#renderSort();
     render(this.#boardContainter, this.#listComponent);
 
-    this.#filterModel.addObserver(this.#handleFilterModelChange);
+    this.#filterModel.addObserver(this.#handleModelEvent);
+    this.#pointsModel.addObserver(this.#handleModelEvent);
 
     this.#renderPoints();
   }
 
   #renderPoint = (point) => {
-    const pointPresenter = new PointPresenter(this.#listComponent, this.#onDataChange, this.#handleModeChange);
+    const pointPresenter = new PointPresenter(this.#listComponent, this.#handleViewAction, this.#handleModeChange);
     pointPresenter.init(point);
     this.#pointPresenters.set(point.id, pointPresenter);
   }
@@ -68,9 +70,29 @@ class TripPresenter {
     this.points.forEach((point) => this.#renderPoint(point));
   }
 
-  #onDataChange = (updatedPoint) => {
-    this.#pointsModel.updatePoint(updatedPoint);
-    this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
+  #handleViewAction = (actionType, updateType, update) => {
+    switch (actionType) {
+      case UserAction.UPDATE_POINT:
+        this.#pointsModel.updatePoint(updateType, update);
+        break;
+    }
+  }
+
+  #handleModelEvent = (updateType, data) => {
+    switch (updateType) {
+      case UpdateType.PATCH:
+        this.#pointPresenters.get(data.id).init(data);
+        break;
+      case UpdateType.MINOR:
+        this.#clearBoard();
+        this.#renderBoard();
+        break;
+      case UpdateType.MAJOR:
+        this.#pointPresenters.get(data.id).init(data);
+        this.#clearBoard();
+        this.#renderBoard();
+        break;
+    }
   }
 
   #renderSort = () => {
@@ -80,7 +102,7 @@ class TripPresenter {
   }
 
   #handleSortTypeChange = (sortType) => {
-    if (sortType === this.#currentSortType || sortType === undefined) {
+    if (sortType === this.#currentSortType) {
       return;
     }
 
@@ -96,11 +118,6 @@ class TripPresenter {
 
   #handleModeChange = () => {
     this.#pointPresenters.forEach((presenter) => presenter.setDefaultView());
-  }
-
-  #handleFilterModelChange = () => {
-    this.#clearPointList();
-    this.#renderPoints();
   }
 
   #renderBoard = () => {
