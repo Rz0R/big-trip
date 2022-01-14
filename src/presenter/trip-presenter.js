@@ -1,4 +1,4 @@
-import { render } from '../utils/render';
+import { render, remove } from '../utils/render';
 import ListView from '../view/list-view';
 import SortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
@@ -6,7 +6,7 @@ import PointPresenter from './point-presenter';
 import dayjs from 'dayjs';
 import { getDuration } from '../utils/common';
 import { filter } from '../utils/fiter';
-import { RenderPosition, SortType} from '../const';
+import { RenderPosition, SortType } from '../const';
 
 class TripPresenter {
 
@@ -14,7 +14,7 @@ class TripPresenter {
   #pointsModel = null;
   #filterModel = null;
 
-  #sortComponent = new SortView();
+  #sortComponent = null;
   #currentSortType = SortType.DAY;
   #filterType = null;
 
@@ -52,6 +52,9 @@ class TripPresenter {
   init = () => {
     this.#renderSort();
     render(this.#boardContainter, this.#listComponent);
+
+    this.#filterModel.addObserver(this.#handleFilterModelChange);
+
     this.#renderPoints();
   }
 
@@ -71,18 +74,19 @@ class TripPresenter {
   }
 
   #renderSort = () => {
+    this.#sortComponent = new SortView(this.#currentSortType);
     render(this.#boardContainter, this.#sortComponent.element, RenderPosition.AFTERBEGIN);
     this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
   }
 
   #handleSortTypeChange = (sortType) => {
-    if (sortType === this.#currentSortType) {
+    if (sortType === this.#currentSortType || sortType === undefined) {
       return;
     }
 
     this.#currentSortType = sortType;
-    this.#clearPointList();
-    this.#renderPoints();
+    this.#clearBoard();
+    this.#renderBoard();
   }
 
   #clearPointList = () => {
@@ -92,6 +96,21 @@ class TripPresenter {
 
   #handleModeChange = () => {
     this.#pointPresenters.forEach((presenter) => presenter.setDefaultView());
+  }
+
+  #handleFilterModelChange = () => {
+    this.#clearPointList();
+    this.#renderPoints();
+  }
+
+  #renderBoard = () => {
+    this.#renderSort();
+    this.#renderPoints();
+  }
+
+  #clearBoard = () => {
+    remove(this.#sortComponent);
+    this.#clearPointList();
   }
 
 }
