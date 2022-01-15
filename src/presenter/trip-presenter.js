@@ -1,14 +1,14 @@
-import { render, remove } from '../utils/render';
 import ListView from '../view/list-view';
 import SortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
+import EmptyListView from '../view/empty-list-view';
 
 import dayjs from 'dayjs';
 import { getDuration } from '../utils/common';
+import { render, remove } from '../utils/render';
 import { filter } from '../utils/fiter';
 import { RenderPosition, SortType } from '../const';
 import { UserAction, UpdateType } from '../const';
-import EmptyListView from '../view/empty-list-view';
 
 class TripPresenter {
 

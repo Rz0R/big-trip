@@ -10,7 +10,7 @@ const Mode = {
 
 class PointPresenter {
 
-  #taskListContainer = null;
+  #pointListContainer = null;
 
   #pointComponent = null;
   #editComponent = null;
@@ -21,8 +21,8 @@ class PointPresenter {
   #changeData = null;
   #changeMode = null;
 
-  constructor(taskListContainer, changeData, changeMode) {
-    this.#taskListContainer = taskListContainer;
+  constructor(pointListContainer, changeData, changeMode) {
+    this.#pointListContainer = pointListContainer;
     this.#changeData = changeData;
     this.#changeMode = changeMode;
   }
@@ -41,7 +41,7 @@ class PointPresenter {
     this.#pointComponent.setFavoriteClickHandler(this.#handleFavoriteClick);
 
     if (prevPointComponent === null || prevEditComponent === null) {
-      render(this.#taskListContainer, this.#pointComponent);
+      render(this.#pointListContainer, this.#pointComponent);
       return;
     }
 
