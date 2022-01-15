@@ -8,6 +8,7 @@ import { getDuration } from '../utils/common';
 import { filter } from '../utils/fiter';
 import { RenderPosition, SortType } from '../const';
 import { UserAction, UpdateType } from '../const';
+import EmptyListView from '../view/empty-list-view';
 
 class TripPresenter {
 
@@ -20,6 +21,7 @@ class TripPresenter {
   #filterType = null;
 
   #listComponent = new ListView();
+  #emptyListComponent = null;
 
   #pointPresenters = new Map();
 
@@ -51,13 +53,12 @@ class TripPresenter {
   }
 
   init = () => {
-    this.#renderSort();
     render(this.#boardContainter, this.#listComponent);
+
+    this.#renderBoard();
 
     this.#filterModel.addObserver(this.#handleModelEvent);
     this.#pointsModel.addObserver(this.#handleModelEvent);
-
-    this.#renderPoints();
   }
 
   #renderPoint = (point) => {
@@ -120,7 +121,19 @@ class TripPresenter {
     this.#pointPresenters.forEach((presenter) => presenter.setDefaultView());
   }
 
+  #renderEmptyList = () => {
+    this.#emptyListComponent = new EmptyListView(this.#filterType);
+    render(this.#boardContainter, this.#emptyListComponent);
+  }
+
   #renderBoard = () => {
+    const pointCount = this.points.length;
+
+    if (pointCount === 0) {
+      this.#renderEmptyList();
+      return;
+    }
+
     this.#renderSort();
     this.#renderPoints();
   }
@@ -128,6 +141,10 @@ class TripPresenter {
   #clearBoard = () => {
     remove(this.#sortComponent);
     this.#clearPointList();
+
+    if (this.#emptyListComponent) {
+      remove(this.#emptyListComponent);
+    }
   }
 
 }
