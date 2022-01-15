@@ -52,6 +52,7 @@ class NewPointPresenter {
         ...point
       }
     );
+    this.destroy();
   }
 
   #handleDeleteClick = () => {

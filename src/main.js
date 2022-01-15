@@ -48,3 +48,16 @@ const siteTripEventsElement = document.querySelector('.trip-events');
 const tripPresenter = new TripPresenter(siteTripEventsElement, pointsModel, filterModel);
 
 tripPresenter.init();
+
+const newPointBtn = document.querySelector('.trip-main__event-add-btn');
+
+const handleNewPointFormClose = () => {
+  newPointBtn.disabled = false;
+};
+
+const handleAddNewPointBtnClick = () => {
+  newPointBtn.disabled = true;
+  tripPresenter.createPoint(handleNewPointFormClose);
+};
+
+newPointBtn.addEventListener('click', handleAddNewPointBtnClick);

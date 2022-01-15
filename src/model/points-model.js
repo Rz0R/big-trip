@@ -34,6 +34,7 @@ class PointsModel extends AbstractObservable {
       ...this.#points,
     ];
 
+    // debugger;
     this._notify(updateType, update);
   }
 

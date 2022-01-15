@@ -1,6 +1,7 @@
 import ListView from '../view/list-view';
 import SortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
+import NewPointPresenter from './new-point-presenter';
 import EmptyListView from '../view/empty-list-view';
 
 import dayjs from 'dayjs';
@@ -22,6 +23,7 @@ class TripPresenter {
 
   #listComponent = new ListView();
   #emptyListComponent = null;
+  #newPointPresenter = null;
 
   #pointPresenters = new Map();
 
@@ -29,6 +31,8 @@ class TripPresenter {
     this.#boardContainter = boardContainter;
     this.#pointsModel = pointsModel;
     this.#filterModel = filerModel;
+
+    this.#newPointPresenter = new NewPointPresenter(this.#listComponent, this.#handleViewAction);
   }
 
   get points() {
@@ -61,6 +65,10 @@ class TripPresenter {
     this.#pointsModel.addObserver(this.#handleModelEvent);
   }
 
+  createPoint = (callback) => {
+    this.#newPointPresenter.init(callback);
+  }
+
   #renderPoint = (point) => {
     const pointPresenter = new PointPresenter(this.#listComponent, this.#handleViewAction, this.#handleModeChange);
     pointPresenter.init(point);
@@ -75,6 +83,12 @@ class TripPresenter {
     switch (actionType) {
       case UserAction.UPDATE_POINT:
         this.#pointsModel.updatePoint(updateType, update);
+        break;
+      case UserAction.ADD_POINT:
+        this.#pointsModel.addPoint(updateType, update);
+        break;
+      case UserAction.DELETE_POINT:
+        this.#pointsModel.deletePoint(updateType, update);
         break;
     }
   }
