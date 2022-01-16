@@ -65,6 +65,15 @@ class PointPresenter {
 
   setDefaultView = () => {
     if (this.#mode !== Mode.DEFAULT) {
+      this.#editComponent.reset(this.#point);
+      this.#replaceFormToEvent();
+    }
+  }
+
+  #escKeyDownHadler = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      this.#editComponent.reset(this.#point);
       this.#replaceFormToEvent();
     }
   }
@@ -81,12 +90,14 @@ class PointPresenter {
   #replaceFormToEvent = () => {
     replace(this.#pointComponent, this.#editComponent);
     this.#mode = Mode.DEFAULT;
+    document.removeEventListener('keydown', this.#escKeyDownHadler);
   }
 
   #replaceEventToForm = () => {
     replace(this.#editComponent, this.#pointComponent);
     this.#changeMode();
     this.#mode = Mode.EDITING;
+    document.addEventListener('keydown', this.#escKeyDownHadler);
   }
 
   #handleFavoriteClick = () => {

@@ -180,6 +180,10 @@ class EditPointView extends SmartView {
     }
   }
 
+  reset = (point) => {
+    this.updateData({...point});
+  }
+
   #setInnerHandlers = () => {
     this.#setDatepickerFrom();
     this.#setDatepickerTo();
