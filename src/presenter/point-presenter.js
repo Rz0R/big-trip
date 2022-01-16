@@ -38,6 +38,7 @@ class PointPresenter {
 
     this.#pointComponent.setPointEditClickHandler(this.#replaceEventToForm);
     this.#editComponent.setFormSubmitHandler(this.#hadleFormSubmit);
+    this.#editComponent.setFormDeleteHandler(this.#handleFormDelete);
     this.#pointComponent.setFavoriteClickHandler(this.#handleFavoriteClick);
 
     if (prevPointComponent === null || prevEditComponent === null) {
@@ -64,13 +65,17 @@ class PointPresenter {
 
   setDefaultView = () => {
     if (this.#mode !== Mode.DEFAULT) {
-      this._replaceFormToEvent();
+      this.#replaceFormToEvent();
     }
   }
 
   #hadleFormSubmit = (updatedPoint) => {
     this.#changeData(UserAction.UPDATE_POINT, UpdateType.MAJOR, updatedPoint);
     this.#replaceFormToEvent();
+  }
+
+  #handleFormDelete = (point) => {
+    this.#changeData(UserAction.DELETE_POINT, UpdateType.MINOR, point);
   }
 
   #replaceFormToEvent = () => {

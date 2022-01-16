@@ -67,6 +67,7 @@ class TripPresenter {
 
   createPoint = (callback) => {
     this.#newPointPresenter.init(callback);
+    this.#handleModeChange();
   }
 
   #renderPoint = (point) => {

@@ -10,12 +10,21 @@ import { TYPES } from '../const';
 
 const DEFAULT_POINT = {
   type: 'taxi',
-  dateFrom: dayjs(),
-  dateTo: dayjs(),
-  offers: [],
+  dateFrom: dayjs().add(1, 'hour'),
+  dateTo: dayjs().add(2, 'hour'),
+  offers: [
+    {
+      title: 'Order Uber',
+      price: '20'
+    },
+    {
+      title: 'Add breakfast',
+      price: '50'
+    }
+  ],
   city: 'Moscow',
   basePrice: 100,
-  description: '',
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget.',
   photos: []
 };
 
@@ -118,7 +127,7 @@ const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, city, basePric
           </div>
 
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-          <button class="event__reset-btn" type="reset">Cancel</button>
+          <button class="event__reset-btn" type="reset">Delete</button>
         </header>
         <section class="event__details">
           <section class="event__section  event__section--offers">
@@ -182,7 +191,7 @@ class EditPointView extends SmartView {
     this.#setInnerHandlers();
 
     this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
-    this.element.querySelector('form').addEventListener('reset', this.#formResetHandler);
+    this.element.querySelector('form').addEventListener('reset', this.#formDeletetHandler);
   }
 
   setFormSubmitHandler = (callback) => {
@@ -195,14 +204,14 @@ class EditPointView extends SmartView {
     this._callback.formSubmit({ ...this._data });
   }
 
-  setFormResetHandler = (callback) => {
-    this._callback.formReset = callback;
-    this.element.querySelector('form').addEventListener('reset', this.#formResetHandler);
+  setFormDeleteHandler = (callback) => {
+    this._callback.formDelete = callback;
+    this.element.querySelector('form').addEventListener('reset', this.#formDeletetHandler);
   }
 
-  #formResetHandler = (evt) => {
+  #formDeletetHandler = (evt) => {
     evt.preventDefault();
-    this._callback.formReset();
+    this._callback.formDelete({ ...this._data });
   }
 
   #cityChangeHadler = (evt) => {

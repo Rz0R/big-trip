@@ -23,7 +23,7 @@ class NewPointPresenter {
 
     this.#editComponent = new EditPointView();
     this.#editComponent.setFormSubmitHandler(this.#handleFormSubmit);
-    this.#editComponent.setFormResetHandler (this.#handleDeleteClick);
+    this.#editComponent.setFormDeleteHandler (this.#handleDeleteClick);
 
     render(this.#pointListContainer, this.#editComponent, RenderPosition.AFTERBEGIN);
 
