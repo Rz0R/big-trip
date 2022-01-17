@@ -7,7 +7,7 @@ import EmptyListView from '../view/empty-list-view';
 import dayjs from 'dayjs';
 import { getDuration } from '../utils/common';
 import { render, remove } from '../utils/render';
-import { filter } from '../utils/fiter';
+import { filter } from '../utils/filter';
 import { RenderPosition, SortType } from '../const';
 import { UserAction, UpdateType } from '../const';
 

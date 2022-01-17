@@ -1,6 +1,6 @@
 import FiltersView from '../view/filter-view';
 import { remove, render, replace } from '../utils/render';
-import { filter } from '../utils/fiter';
+import { filter } from '../utils/filter';
 
 import { FilterType, RenderPosition, UpdateType } from '../const';
 

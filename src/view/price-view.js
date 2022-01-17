@@ -1,22 +1,25 @@
 import AbstractView from './abstract-view';
 
-const createPriceTemplate = (price) => (
-  `<p class="trip-info__cost">
-    Total: &euro;&nbsp;<span class="trip-info__cost-value">${price}</span>
-  </p>`
-);
+const createPriceTemplate = (points) => {
+  const price = points.reduce((price, point) => price + point.basePrice, 0);
+
+  return (
+    `<p class="trip-info__cost">
+      Total: &euro;&nbsp;<span class="trip-info__cost-value">${price}</span>
+    </p>`
+  );
+};
 
 class PriceView extends AbstractView {
+  #points = null;
 
-  #price = null;
-
-  constructor(price) {
+  constructor(points) {
     super();
-    this.#price = price;
+    this.#points = points;
   }
 
   get template() {
-    return createPriceTemplate(this.#price);
+    return createPriceTemplate([...this.#points]);
   }
 }
 

@@ -10,9 +10,9 @@ class HeaderPresenter {
   #headerContainer = null;
   #pointsModel = null;
 
-  #tripInfoHeader = new TripInfoHeaderView();
-  #tripInfo = new TripInfoView();
-  #price = null;
+  #tripInfoHeaderComponent = new TripInfoHeaderView();
+  #tripInfoComponent = null;
+  #priceComponent = null;
 
   constructor(headerContainer, pointsModel) {
     this.#headerContainer = headerContainer;
@@ -20,7 +20,7 @@ class HeaderPresenter {
   }
 
   init = () => {
-    render(this.#headerContainer, this.#tripInfoHeader, RenderPosition.AFTERBEGIN);
+    render(this.#headerContainer, this.#tripInfoHeaderComponent, RenderPosition.AFTERBEGIN);
     this.#renderTripInfo();
     this.#renderPrice();
 
@@ -32,25 +32,33 @@ class HeaderPresenter {
   }
 
   #renderTripInfo = () => {
-    render(this.#tripInfoHeader, this.#tripInfo, RenderPosition.AFTERBEGIN);
-  }
+    const preveTripInfoComponent = this.#tripInfoComponent;
+    this.#tripInfoComponent = new TripInfoView(this.points);
 
-  #renderPrice = () => {
-    const prevPrice = this.#price;
-    this.#price = new PriceView(this.#calculatePrice());
-
-    if (prevPrice === null) {
-      render(this.#tripInfoHeader, this.#price, RenderPosition.BEFOREEND);
+    if (preveTripInfoComponent === null) {
+      render(this.#tripInfoHeaderComponent, this.#tripInfoComponent, RenderPosition.AFTERBEGIN);
       return;
     }
 
-    replace(this.#price, prevPrice);
+    replace(this.#tripInfoComponent, preveTripInfoComponent);
+    remove(preveTripInfoComponent);
+  }
+
+  #renderPrice = () => {
+    const prevPrice = this.#priceComponent;
+    this.#priceComponent = new PriceView(this.points);
+
+    if (prevPrice === null) {
+      render(this.#tripInfoHeaderComponent, this.#priceComponent, RenderPosition.BEFOREEND);
+      return;
+    }
+
+    replace(this.#priceComponent, prevPrice);
     remove(prevPrice);
   }
 
-  #calculatePrice = () => this.points.reduce((price, point) => price + point.basePrice, 0);
-
   #handleModelEvent = () => {
+    this.#renderTripInfo();
     this.#renderPrice();
   }
 
