@@ -37,3 +37,8 @@ export const UpdateType = {
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
 };
+
+export const MenuItem = {
+  TABLE: 'TABLE',
+  STATS: 'STATS'
+}

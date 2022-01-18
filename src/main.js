@@ -9,6 +9,7 @@ import FilterPresenter from './presenter/filter-presenter';
 
 import PointsModel from './model/points-model';
 import FilterModel from './model/filter-model';
+import { MenuItem } from './const';
 
 const POINT_COUNT = 10;
 const points = Array.from({ length: POINT_COUNT }, generatePoint);
@@ -23,17 +24,13 @@ const siteTripMainElement = document.querySelector('.trip-main');
 const headerPresenter = new HeaderPresenter(siteTripMainElement, pointsModel);
 headerPresenter.init();
 
-const renderHeader = () => {
-  const siteTripMenuElement = siteTripMainElement.querySelector('.trip-controls__navigation');
-  const menuComponent = new MenuView();
-  render(siteTripMenuElement, menuComponent.element);
+const siteTripMenuElement = siteTripMainElement.querySelector('.trip-controls__navigation');
+const menuComponent = new MenuView(MenuItem.TABLE);
+render(siteTripMenuElement, menuComponent.element);
 
-  const siteTripFiltersElement = siteTripMainElement.querySelector('.trip-controls__filters');
-  const filterPresenter = new FilterPresenter(siteTripFiltersElement, pointsModel, filterModel);
-  filterPresenter.init();
-};
-
-renderHeader();
+const siteTripFiltersElement = siteTripMainElement.querySelector('.trip-controls__filters');
+const filterPresenter = new FilterPresenter(siteTripFiltersElement, pointsModel, filterModel);
+filterPresenter.init();
 
 const siteTripEventsElement = document.querySelector('.trip-events');
 const tripPresenter = new TripPresenter(siteTripEventsElement, pointsModel, filterModel);
