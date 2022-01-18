@@ -12,6 +12,7 @@ class FilterPresenter {
   #filterModel = null;
 
   #filterComponent = null;
+  #isDisabled = false;
 
   constructor(filterContainer, pointsModel, filterModel) {
     this.#filterContainer = filterContainer;
@@ -42,7 +43,7 @@ class FilterPresenter {
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
 
-    this.#filterComponent = new FiltersView(filters, this.#filterModel.filter);
+    this.#filterComponent = new FiltersView(filters, this.#filterModel.filter, this.#isDisabled);
     this.#filterComponent.setFiterTypeChangeHandler(this.#handleFilterTypeChange);
 
     this.#pointsModel.addObserver(this.#handleModeEvent);
@@ -65,6 +66,11 @@ class FilterPresenter {
     this.#filterModel.removeObserver(this.#handleModeEvent);
 
     this.#filterModel.filter = FilterType.EVERYTHING;
+  }
+
+  set disabled(isDisabled) {
+    this.#isDisabled = isDisabled;
+    this.init();
   }
 
   #handleModeEvent = () => {

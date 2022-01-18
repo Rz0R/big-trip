@@ -70,6 +70,14 @@ class TripPresenter {
     this.#handleModeChange();
   }
 
+  destroy = () => {
+    this.#clearBoard();
+    remove(this.#listComponent);
+
+    this.#filterModel.removeObserver(this.#handleModelEvent);
+    this.#pointsModel.removeObserver(this.#handleModelEvent);
+  }
+
   #renderPoint = (point) => {
     const pointPresenter = new PointPresenter(this.#listComponent, this.#handleViewAction, this.#handleModeChange);
     pointPresenter.init(point);

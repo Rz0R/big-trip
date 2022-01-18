@@ -21,10 +21,6 @@ const siteTripMainElement = document.querySelector('.trip-main');
 const headerPresenter = new HeaderPresenter(siteTripMainElement, pointsModel);
 headerPresenter.init();
 
-const siteTripMenuElement = siteTripMainElement.querySelector('.trip-controls__navigation');
-const menuPresenter = new MenuPresenter(siteTripMenuElement);
-menuPresenter.init();
-
 const siteTripFiltersElement = siteTripMainElement.querySelector('.trip-controls__filters');
 const filterPresenter = new FilterPresenter(siteTripFiltersElement, pointsModel, filterModel);
 filterPresenter.init();
@@ -36,13 +32,21 @@ tripPresenter.init();
 
 const newPointBtn = document.querySelector('.trip-main__event-add-btn');
 
+const disableCreateButton = (isDisabled) => {
+  newPointBtn.disabled = isDisabled;
+}
+
 const handleNewPointFormClose = () => {
-  newPointBtn.disabled = false;
+  disableCreateButton(false);
 };
 
 const handleAddNewPointBtnClick = () => {
-  newPointBtn.disabled = true;
+  disableCreateButton(true);
   tripPresenter.createPoint(handleNewPointFormClose);
 };
 
 newPointBtn.addEventListener('click', handleAddNewPointBtnClick);
+
+const siteTripMenuElement = siteTripMainElement.querySelector('.trip-controls__navigation');
+const menuPresenter = new MenuPresenter(siteTripMenuElement, siteTripEventsElement, tripPresenter, filterPresenter, disableCreateButton);
+menuPresenter.init();

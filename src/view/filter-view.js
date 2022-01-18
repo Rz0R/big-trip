@@ -1,7 +1,7 @@
 import AbstractView from './abstract-view';
 
 
-const createFiterItemMarkup = (filter, activeFilter) => {
+const createFiterItemMarkup = (filter, activeFilter, isDisabled) => {
   const { name, count } = filter;
 
   return (
@@ -14,15 +14,16 @@ const createFiterItemMarkup = (filter, activeFilter) => {
         name="trip-filter"
         value="${name}"
         ${name === activeFilter ? 'checked' : ''}
+        ${isDisabled ? 'disabled' : ''}
       >
       <label class="trip-filters__filter-label" for="filter-${name}">${name}(${count})</label>
     </div>`);
 };
 
-const createFitersTemplate = (filterItems, activeFilter) => {
+const createFitersTemplate = (filterItems, activeFilter, isDisabled) => {
 
   const fiterItemsMarkup = filterItems
-    .map((filter) => createFiterItemMarkup(filter, activeFilter))
+    .map((filter) => createFiterItemMarkup(filter, activeFilter, isDisabled))
     .join('\n');
 
   return (
@@ -38,15 +39,17 @@ class FitersView extends AbstractView {
 
   #filters = null;
   #activeFilter = null;
+  #isDisabled = null;
 
-  constructor(fiters, activeFilter) {
+  constructor(fiters, activeFilter, isDisabled) {
     super();
     this.#filters = fiters;
     this.#activeFilter = activeFilter;
+    this.#isDisabled = isDisabled;
   }
 
   get template() {
-    return createFitersTemplate(this.#filters, this.#activeFilter);
+    return createFitersTemplate(this.#filters, this.#activeFilter, this.#isDisabled);
   }
 
   setFiterTypeChangeHandler = (callback) => {

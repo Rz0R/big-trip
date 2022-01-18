@@ -41,4 +41,4 @@ export const UpdateType = {
 export const MenuItem = {
   TABLE: 'TABLE',
   STATS: 'STATS'
-}
+};
