@@ -7,15 +7,22 @@ import { getDuration, formatDuration } from '../utils/common';
 const getChartData = (points) => {
   const types = [...new Set(points.map((point) => point.type))];
   const chartData = types.map((type) => {
-    const money = points.reduce((sum, point) => point.type === type ? sum + point.basePrice : sum, 0);
-    const typeCount = points.reduce((count, point) => point.type === type ? count + 1 : count, 0);
-    const time = points.reduce((duration, point) => point.type === type ? duration + getDuration(point.dateFrom, point.dateTo) : duration, 0);
-    return {
+    return points.reduce((res, point) => {
+      if (point.type === type) {
+        return {
+          type: res.type,
+          money: res.money + point.basePrice,
+          typeCount: res.typeCount + 1,
+          time: res.time + getDuration(point.dateFrom, point.dateTo)
+        }
+      }
+      return res;
+    }, {
       type: type.toUpperCase(),
-      money,
-      typeCount,
-      time
-    };
+      money: 0,
+      typeCount: 0,
+      time: 0
+    });
   });
   return chartData;
 };
