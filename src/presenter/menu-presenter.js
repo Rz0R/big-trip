@@ -16,12 +16,15 @@ class MenuPresenter {
 
   #disableNewPointBtn = {};
 
-  constructor(menuContainer, tableContainer, tripPresenter, filterPresenter, disableNewPointBtn) {
+  #pointsModel = null;
+
+  constructor(menuContainer, tableContainer, tripPresenter, filterPresenter, disableNewPointBtn, pointsModel) {
     this.#menuContainer = menuContainer;
     this.#tripPresenter = tripPresenter;
     this.#tableContainer = tableContainer;
     this.#filterPresenter = filterPresenter;
     this.#disableNewPointBtn = disableNewPointBtn;
+    this.#pointsModel = pointsModel;
 
     this.#menuComponent = new MenuView(this.#currentMenuItem);
   }
@@ -41,7 +44,7 @@ class MenuPresenter {
   }
 
   #renderStats = () => {
-    this.#statsComponent = new StatsView();
+    this.#statsComponent = new StatsView(this.#pointsModel.points);
     render(this.#tableContainer, this.#statsComponent, RenderPosition.AFTEREND);
   }
 
@@ -73,7 +76,6 @@ class MenuPresenter {
         break;
     }
   }
-
 }
 
 export default MenuPresenter;

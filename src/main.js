@@ -34,7 +34,7 @@ const newPointBtn = document.querySelector('.trip-main__event-add-btn');
 
 const disableCreateButton = (isDisabled) => {
   newPointBtn.disabled = isDisabled;
-}
+};
 
 const handleNewPointFormClose = () => {
   disableCreateButton(false);
@@ -48,5 +48,5 @@ const handleAddNewPointBtnClick = () => {
 newPointBtn.addEventListener('click', handleAddNewPointBtnClick);
 
 const siteTripMenuElement = siteTripMainElement.querySelector('.trip-controls__navigation');
-const menuPresenter = new MenuPresenter(siteTripMenuElement, siteTripEventsElement, tripPresenter, filterPresenter, disableCreateButton);
+const menuPresenter = new MenuPresenter(siteTripMenuElement, siteTripEventsElement, tripPresenter, filterPresenter, disableCreateButton, pointsModel);
 menuPresenter.init();

@@ -68,6 +68,10 @@ class FilterPresenter {
     this.#filterModel.filter = FilterType.EVERYTHING;
   }
 
+  get disabled() {
+    return this.#isDisabled;
+  }
+
   set disabled(isDisabled) {
     this.#isDisabled = isDisabled;
     this.init();
