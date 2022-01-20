@@ -1,5 +1,7 @@
 import { generatePoint } from './mock/point';
 
+import ApiService from './api-service';
+
 import HeaderPresenter from './presenter/header-presenter';
 import TripPresenter from './presenter/trip-presenter';
 import FilterPresenter from './presenter/filter-presenter';
@@ -50,3 +52,10 @@ newPointBtn.addEventListener('click', handleAddNewPointBtnClick);
 const siteTripMenuElement = siteTripMainElement.querySelector('.trip-controls__navigation');
 const menuPresenter = new MenuPresenter(siteTripMenuElement, siteTripEventsElement, tripPresenter, filterPresenter, disableCreateButton, pointsModel);
 menuPresenter.init();
+
+const AUTHORIZATION = 'Basic hS2hfS45wCk1sa2k';
+const END_POINT = 'https://16.ecmascript.pages.academy/big-trip';
+
+const apiService = new ApiService(END_POINT, AUTHORIZATION);
+
+apiService.points.then((data) => data);
