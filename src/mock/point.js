@@ -20,23 +20,23 @@ const generateOffers = () => {
   const offers = [
     {
       title: 'Order Uber',
-      price: '20'
+      price: 20
     },
     {
       title: 'Add breakfast',
-      price: '50'
+      price: 50
     },
     {
       title: 'Upgrade to a business class',
-      price: '190'
+      price: 140
     },
     {
       title: 'Choose the radio station',
-      price: '30'
+      price: 30
     },
     {
       title: 'Drive slowly',
-      price: '110'
+      price: 50
     }
   ];
 
@@ -49,7 +49,7 @@ const generateOffers = () => {
     res.add(offers[randomIndex]);
   }
 
-  return [...res];
+  return [...res].map((offer) => ({ id: nanoid(), ...offer, checked: Math.random() > 0.5 }));
 };
 
 export const generateDescription = () => {

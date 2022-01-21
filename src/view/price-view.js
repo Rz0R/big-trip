@@ -1,7 +1,9 @@
 import AbstractView from './abstract-view';
 
+const sumOffersPrice = (offers) => offers.reduce((total, offer) => offer.checked ? total + offer.price : total, 0);
+
 const createPriceTemplate = (points) => {
-  const price = points.reduce((total, point) => total + point.basePrice, 0);
+  const price = points.reduce((total, point) => total + point.basePrice + sumOffersPrice(point.offers), 0);
 
   return (
     `<p class="trip-info__cost">

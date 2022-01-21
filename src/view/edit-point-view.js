@@ -5,7 +5,6 @@ import flatpickr from 'flatpickr';
 import '../../node_modules/flatpickr/dist/flatpickr.min.css';
 
 import dayjs from 'dayjs';
-import { getRandomInteger } from '../utils/common';
 import { TYPES } from '../const';
 
 const DEFAULT_POINT = {
@@ -28,27 +27,21 @@ const DEFAULT_POINT = {
   photos: []
 };
 
-const createOfferMarkup = (title, price, ind, isChecked = false) => {
-
-  // Нужно придумать нормальную идентификацию
-  const id = getRandomInteger(1, 10000);
-
-  return (
-    `<div class="event__offer-selector">
+const createOfferMarkup = (title, price, id, isChecked) => (
+  `<div class="event__offer-selector">
     <input
       class="event__offer-checkbox
       visually-hidden"
-      id="event-offer-${id}-${ind}" type="checkbox"
+      id="event-offer-${id}" type="checkbox"
       name="event-offer-${id}"
       ${isChecked ? 'checked' : ''}
     >
-    <label class="event__offer-label" for="event-offer-${id}-${ind}">
+    <label class="event__offer-label" for="event-offer-${id}">
       <span class="event__offer-title">${title}</span>
       &plus;&euro;&nbsp;
       <span class="event__offer-price">${price}</span>
     </label>
   </div>`);
-};
 
 const createTypeItemMarkup = (type) => (
   `<div class="event__type-item">
@@ -76,10 +69,9 @@ const createPhotoMarkup = (url) => (
 );
 
 const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, city, basePrice, description, photos }) => {
-
-  const offerEls = offers.map((offer, ind) => {
-    const { title, price } = offer;
-    return createOfferMarkup(title, price, ind, Math.random() > 0.5);
+  const offerEls = offers.map((offer) => {
+    const { title, price, id, checked } = offer;
+    return createOfferMarkup(title, price, id, checked);
   }).join('\n');
 
   const photoEls = photos.map((url) => createPhotoMarkup(url)).join('\n');
@@ -181,7 +173,7 @@ class EditPointView extends SmartView {
   }
 
   reset = (point) => {
-    this.updateData({...point});
+    this.updateData({ ...point });
   }
 
   #setInnerHandlers = () => {
