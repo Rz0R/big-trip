@@ -3,6 +3,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import SmartView from './smart-view';
 
 import { getDuration, formatDuration } from '../utils/common';
+import { sumOffersPrice } from '../utils/common';
 
 const getChartData = (points) => {
   const types = [...new Set(points.map((point) => point.type))];
@@ -10,7 +11,7 @@ const getChartData = (points) => {
     if (point.type === type) {
       return {
         type: res.type,
-        money: res.money + point.basePrice,
+        money: res.money + point.basePrice + sumOffersPrice(point.offers),
         typeCount: res.typeCount + 1,
         time: res.time + getDuration(point.dateFrom, point.dateTo)
       };

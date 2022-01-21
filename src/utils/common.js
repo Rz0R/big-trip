@@ -47,3 +47,5 @@ export const updateItem = (items, update) => {
     ...items.slice(index + 1),
   ];
 };
+
+export const sumOffersPrice = (offers) => offers.reduce((total, offer) => offer.checked ? total + offer.price : total, 0);

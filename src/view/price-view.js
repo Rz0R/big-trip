@@ -1,6 +1,5 @@
 import AbstractView from './abstract-view';
-
-const sumOffersPrice = (offers) => offers.reduce((total, offer) => offer.checked ? total + offer.price : total, 0);
+import { sumOffersPrice } from '../utils/common';
 
 const createPriceTemplate = (points) => {
   const price = points.reduce((total, point) => total + point.basePrice + sumOffersPrice(point.offers), 0);
