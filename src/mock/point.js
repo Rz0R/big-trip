@@ -3,10 +3,10 @@ import { nanoid } from 'nanoid';
 import { getRandomInteger } from '../utils/common';
 
 import { cities } from './cities';
-import { offers } from './offers';
+import { offers as allOffers } from './offers';
 
 const allCities = cities.map((item) => item.name);
-const allTypes = offers.map((item) => item.type);
+const allTypes = allOffers.map((item) => item.type);
 
 const generateRandomDate = (start, end) => new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toISOString();
 
@@ -20,9 +20,7 @@ const generateCity = () => {
   return allCities[randomIndex];
 };
 
-const generateOffers = (type) => {
-  return offers.find((item) => item.type === type).offers;
-};
+const generateOffers = (type) => allOffers.find((item) => item.type === type).offers;
 
 const generateDestination = (city) => cities.find((destination) => destination.name === city);
 
@@ -39,7 +37,7 @@ export const generatePoint = () => {
   const offers = generateOffers(type);
 
   const isFavorite = Boolean(Math.random() > 0.5);
-  const basePrice = getRandomInteger(1, 10) * 10;
+  const basePrice = getRandomInteger(1, 10) * 100;
 
   const destination = generateDestination(city);
 

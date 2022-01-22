@@ -65,7 +65,7 @@ const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, destination: {
   const typeListMarkup = createTypeListMarkup(allTypes);
 
   const allCities = destinations.map((item) => item.name);
-  const cityOptionsMarkup = allCities.map((city) => createCityOptionMarup(city)).join('\n');
+  const cityOptionsMarkup = allCities.map((name) => createCityOptionMarup(name)).join('\n');
 
   return (
     `<li class="trip-events__item">
@@ -222,7 +222,6 @@ class EditPointView extends SmartView {
     evt.preventDefault();
     const type = evt.target.value;
     const newOffers = this.#allOffers.find((offer) => offer.type === type).offers;
-    console.log(newOffers);
     this.updateData({
       type: evt.target.value,
       offers: cloneDeep(newOffers)

@@ -1,13 +1,34 @@
 import AbstractObservable from './abstract-observable';
 import { cloneDeep } from '../utils/common';
-import { cities } from '../mock/cities';
-import { offers } from '../mock/offers';
+import { UpdateType } from '../const';
 
 class PointsModel extends AbstractObservable {
 
   #points = [];
-  #cities = cities;
-  #offers = offers;
+  #destinations = [];
+  #offers = [];
+
+  #apiService = null;
+
+  constructor(apiService) {
+    super();
+    this.#apiService = apiService;
+  }
+
+  init = async () => {
+    try {
+      const points = await this.#apiService.points;
+      this.#points = points.map(this.#adaptToClient);
+      this.#destinations = await this.#apiService.destinations;
+      this.#offers = await this.#apiService.offers;
+    } catch (err) {
+      this.#points = [];
+      this.#destinations = [];
+      this.#offers = [];
+    }
+
+    this._notify(UpdateType.INIT);
+  }
 
   set points(points) {
     this.#points = cloneDeep(points);
@@ -17,8 +38,8 @@ class PointsModel extends AbstractObservable {
     return cloneDeep(this.#points);
   }
 
-  get cities() {
-    return cloneDeep(this.#cities);
+  get destinations() {
+    return cloneDeep(this.#destinations);
   }
 
   get offers() {
@@ -65,14 +86,22 @@ class PointsModel extends AbstractObservable {
     this._notify(updateType);
   }
 
-  // #adaptToClient = (point) => {
-  //   const adaptedPoint = {
-  //     ...point,
-  //     basePrice: point.base_price,
-  //     dateFrom: point.date_from,
-  //     isFavorite: point.is_favorite,
-  //   };
-  // }
+  #adaptToClient = (point) => {
+    const adaptedPoint = {
+      ...point,
+      basePrice: point.base_price,
+      dateFrom: point.date_from,
+      dateTo: point.date_to,
+      isFavorite: point.is_favorite,
+    };
+
+    delete adaptedPoint.base_price;
+    delete adaptedPoint.date_from;
+    delete adaptedPoint.date_to;
+    delete adaptedPoint.is_favorite;
+
+    return adaptedPoint;
+  }
 
 }
 

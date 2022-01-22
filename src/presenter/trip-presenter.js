@@ -3,6 +3,7 @@ import SortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
 import NewPointPresenter from './new-point-presenter';
 import EmptyListView from '../view/empty-list-view';
+import LoadingView from '../view/loading-view';
 
 import dayjs from 'dayjs';
 import { getDuration } from '../utils/common';
@@ -20,14 +21,16 @@ class TripPresenter {
   #sortComponent = null;
   #currentSortType = SortType.DAY;
   #filterType = null;
+  #isLoading = true;
 
   #listComponent = new ListView();
   #emptyListComponent = null;
+  #loadingComponent = new LoadingView();
   #newPointPresenter = null;
 
   #pointPresenters = new Map();
 
-  #cities = null;
+  #destinations = null;
   #offers = null;
 
   constructor(boardContainter, pointsModel, filerModel) {
@@ -35,10 +38,8 @@ class TripPresenter {
     this.#pointsModel = pointsModel;
     this.#filterModel = filerModel;
 
-    this.#cities = pointsModel.cities;
-    this.#offers = pointsModel.offers;
-
-    this.#newPointPresenter = new NewPointPresenter(this.#listComponent, this.#handleViewAction, this.#cities, this.#offers);
+    this.#destinations = [];
+    this.#offers = [];
   }
 
   get points() {
@@ -72,6 +73,11 @@ class TripPresenter {
   }
 
   createPoint = (callback) => {
+    if (this.#isLoading) {
+      callback();
+      return;
+    }
+    this.#newPointPresenter = new NewPointPresenter(this.#listComponent, this.#handleViewAction, this.#destinations, this.#offers);
     this.#newPointPresenter.init(callback);
     this.#handleModeChange();
   }
@@ -85,7 +91,7 @@ class TripPresenter {
   }
 
   #renderPoint = (point) => {
-    const pointPresenter = new PointPresenter(this.#listComponent, this.#handleViewAction, this.#handleModeChange, this.#cities, this.#offers);
+    const pointPresenter = new PointPresenter(this.#listComponent, this.#handleViewAction, this.#handleModeChange, this.#destinations, this.#offers);
     pointPresenter.init(point);
     this.#pointPresenters.set(point.id, pointPresenter);
   }
@@ -122,6 +128,13 @@ class TripPresenter {
         this.#clearBoard();
         this.#renderBoard();
         break;
+      case UpdateType.INIT:
+        this.#isLoading = false;
+        this.#destinations = this.#pointsModel.destinations;
+        this.#offers = this.#pointsModel.offers;
+        remove(this.#loadingComponent);
+        this.#renderBoard();
+        break;
     }
   }
 
@@ -155,7 +168,16 @@ class TripPresenter {
     render(this.#boardContainter, this.#emptyListComponent);
   }
 
+  #renderLoading = () => {
+    render(this.#boardContainter, this.#loadingComponent);
+  }
+
   #renderBoard = () => {
+    if (this.#isLoading) {
+      this.#renderLoading();
+      return;
+    }
+
     const pointCount = this.points.length;
 
     if (pointCount === 0) {
