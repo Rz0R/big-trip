@@ -1,31 +1,12 @@
 import SmartView from './smart-view';
 
+import { cloneDeep } from '../utils/common';
+
 import flatpickr from 'flatpickr';
 
 import '../../node_modules/flatpickr/dist/flatpickr.min.css';
 
 import dayjs from 'dayjs';
-import { TYPES } from '../const';
-
-const DEFAULT_POINT = {
-  type: 'taxi',
-  dateFrom: dayjs().add(1, 'hour'),
-  dateTo: dayjs().add(2, 'hour'),
-  offers: [
-    {
-      title: 'Order Uber',
-      price: '20'
-    },
-    {
-      title: 'Add breakfast',
-      price: '50'
-    }
-  ],
-  city: 'Moscow',
-  basePrice: 100,
-  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget.',
-  photos: []
-};
 
 const createOfferMarkup = (title, price, id, isChecked) => (
   `<div class="event__offer-selector">
@@ -50,8 +31,12 @@ const createTypeItemMarkup = (type) => (
   </div>`
 );
 
-const createTypeListMarkup = () => {
-  const typeEls = TYPES.map((type) => createTypeItemMarkup(type)).join('\n');
+const createCityOptionMarup = (city) => (
+  `<option value="${city}"></option>`
+);
+
+const createTypeListMarkup = (types) => {
+  const typeEls = types.map((type) => createTypeItemMarkup(type)).join('\n');
 
   return (
     `<div class="event__type-list">
@@ -64,17 +49,23 @@ const createTypeListMarkup = () => {
   );
 };
 
-const createPhotoMarkup = (url) => (
-  `<img class="event__photo" src="${url}" alt="Event photo">`
+const createPhotoMarkup = ({ src, description }) => (
+  `<img class="event__photo" src="${src}" alt="${description}">`
 );
 
-const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, city, basePrice, description, photos }) => {
+const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, destination: { name: city, description, pictures }, basePrice }, destinations, allOffers) => {
   const offerEls = offers.map((offer) => {
     const { title, price, id, checked } = offer;
     return createOfferMarkup(title, price, id, checked);
   }).join('\n');
 
-  const photoEls = photos.map((url) => createPhotoMarkup(url)).join('\n');
+  const photoEls = pictures.map((picture) => createPhotoMarkup(picture)).join('\n');
+
+  const allTypes = allOffers.map((item) => item.type);
+  const typeListMarkup = createTypeListMarkup(allTypes);
+
+  const allCities = destinations.map((item) => item.name);
+  const cityOptionsMarkup = allCities.map((city) => createCityOptionMarup(city)).join('\n');
 
   return (
     `<li class="trip-events__item">
@@ -87,7 +78,7 @@ const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, city, basePric
             </label>
             <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
-            ${createTypeListMarkup()}
+            ${typeListMarkup}
           </div>
 
           <div class="event__field-group  event__field-group--destination">
@@ -96,9 +87,7 @@ const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, city, basePric
             </label>
             <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
             <datalist id="destination-list-1">
-              <option value="Amsterdam"></option>
-              <option value="Geneva"></option>
-              <option value="Chamonix"></option>
+              ${cityOptionsMarkup}
             </datalist>
           </div>
 
@@ -151,14 +140,20 @@ class EditPointView extends SmartView {
   #datepickerFrom = null;
   #datepickerTo = null;
 
-  constructor(point = DEFAULT_POINT) {
+  #destinations = null;
+  #allOffers = null;
+
+  constructor(point, destinations, allOffers) {
     super();
-    this._data = { ...point };
+    this._data = cloneDeep(point);
+    this.#destinations = destinations;
+    this.#allOffers = allOffers;
+
     this.#setInnerHandlers();
   }
 
   get template() {
-    return creatEditPointTemplate(this._data);
+    return creatEditPointTemplate(this._data, this.#destinations, this.#allOffers);
   }
 
   removeElement = () => {
@@ -173,7 +168,7 @@ class EditPointView extends SmartView {
   }
 
   reset = (point) => {
-    this.updateData({ ...point });
+    this.updateData(cloneDeep(point));
   }
 
   #setInnerHandlers = () => {
@@ -212,15 +207,25 @@ class EditPointView extends SmartView {
 
   #cityChangeHadler = (evt) => {
     evt.preventDefault();
-    this.updateData({
-      city: evt.target.value
-    });
+    const city = evt.target.value;
+    const destination = this.#destinations.find((item) => item.name === city);
+    if (city && destination) {
+      this.updateData({
+        destination
+      });
+    } else {
+      evt.target.setCustomValidity('There is no such city in the list');
+    }
   }
 
   #typeChangeHandler = (evt) => {
     evt.preventDefault();
+    const type = evt.target.value;
+    const newOffers = this.#allOffers.find((offer) => offer.type === type).offers;
+    console.log(newOffers);
     this.updateData({
-      type: evt.target.value
+      type: evt.target.value,
+      offers: cloneDeep(newOffers)
     });
   }
 

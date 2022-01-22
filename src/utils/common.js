@@ -48,4 +48,6 @@ export const updateItem = (items, update) => {
   ];
 };
 
-export const sumOffersPrice = (offers) => offers.reduce((total, offer) => offer.checked ? total + offer.price : total, 0);
+export const sumOffersPrice = (offers) => offers.reduce((total, offer) => total + offer.price, 0);
+
+export const cloneDeep = (oldObject) => JSON.parse(JSON.stringify(oldObject));

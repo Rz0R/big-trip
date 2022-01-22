@@ -1,7 +1,66 @@
-import { nanoid } from 'nanoid';
+import EditPointView from '../view/edit-point-view';
+
 import { RenderPosition, UpdateType, UserAction } from '../const';
 import { remove, render } from '../utils/render';
-import EditPointView from '../view/edit-point-view';
+
+import dayjs from 'dayjs';
+import { nanoid } from 'nanoid';
+
+const DEFAULT_POINT = {
+  'type': 'taxi',
+  'dateFrom': dayjs().add(1, 'hour'),
+  'dateTo': dayjs().add(2, 'hour'),
+  'basePrice': 200,
+  'destination': {
+    'name': 'Chamonix',
+    'description': 'Chamonix, in a middle of Europe, middle-eastern paradise, famous for its crowded street markets with the best street food in Asia.',
+    'pictures': [
+      {
+        'src': 'http://picsum.photos/300/200?r=0.5442767253004888',
+        'description': 'Chamonix zoo'
+      },
+      {
+        'src': 'http://picsum.photos/300/200?r=0.9459422561320008',
+        'description': 'Chamonix city centre'
+      },
+      {
+        'src': 'http://picsum.photos/300/200?r=0.14330792188576758',
+        'description': 'Chamonix park'
+      },
+      {
+        'src': 'http://picsum.photos/300/200?r=0.05754116582269897',
+        'description': 'Chamonix central station'
+      }
+    ]
+  },
+  'offers': [
+    {
+      'id': 1,
+      'title': 'Upgrade to a business class',
+      'price': 190
+    },
+    {
+      'id': 2,
+      'title': 'Choose the radio station',
+      'price': 30
+    },
+    {
+      'id': 3,
+      'title': 'Choose temperature',
+      'price': 170
+    },
+    {
+      'id': 4,
+      'title': 'Drive quickly, I\'m in a hurry',
+      'price': 100
+    },
+    {
+      'id': 5,
+      'title': 'Drive slowly',
+      'price': 110
+    }
+  ],
+};
 
 class NewPointPresenter {
   #pointListContainer = null;
@@ -9,9 +68,14 @@ class NewPointPresenter {
   #editComponent = null;
   #destroyCallback = null;
 
-  constructor(pointListContainer, changeData) {
+  #destinations = null;
+  #allOffers = null;
+
+  constructor(pointListContainer, changeData, destinations, allOffers) {
     this.#pointListContainer = pointListContainer;
     this.#changeData = changeData;
+    this.#destinations = destinations;
+    this.#allOffers = allOffers;
   }
 
   init = (callback) => {
@@ -21,9 +85,9 @@ class NewPointPresenter {
       return;
     }
 
-    this.#editComponent = new EditPointView();
+    this.#editComponent = new EditPointView(DEFAULT_POINT, this.#destinations, this.#allOffers);
     this.#editComponent.setFormSubmitHandler(this.#handleFormSubmit);
-    this.#editComponent.setFormDeleteHandler (this.#handleDeleteClick);
+    this.#editComponent.setFormDeleteHandler(this.#handleDeleteClick);
 
     render(this.#pointListContainer, this.#editComponent, RenderPosition.AFTERBEGIN);
 
@@ -65,7 +129,6 @@ class NewPointPresenter {
       this.destroy();
     }
   }
-
 }
 
 export default NewPointPresenter;

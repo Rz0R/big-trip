@@ -1,15 +1,28 @@
 import AbstractObservable from './abstract-observable';
+import { cloneDeep } from '../utils/common';
+import { cities } from '../mock/cities';
+import { offers } from '../mock/offers';
 
 class PointsModel extends AbstractObservable {
 
   #points = [];
+  #cities = cities;
+  #offers = offers;
 
   set points(points) {
-    this.#points = [...points];
+    this.#points = cloneDeep(points);
   }
 
   get points() {
-    return this.#points;
+    return cloneDeep(this.#points);
+  }
+
+  get cities() {
+    return cloneDeep(this.#cities);
+  }
+
+  get offers() {
+    return cloneDeep(this.#offers);
   }
 
   updatePoint = (updateType, update) => {
@@ -34,7 +47,6 @@ class PointsModel extends AbstractObservable {
       ...this.#points,
     ];
 
-    // debugger;
     this._notify(updateType, update);
   }
 
@@ -52,6 +64,15 @@ class PointsModel extends AbstractObservable {
 
     this._notify(updateType);
   }
+
+  // #adaptToClient = (point) => {
+  //   const adaptedPoint = {
+  //     ...point,
+  //     basePrice: point.base_price,
+  //     dateFrom: point.date_from,
+  //     isFavorite: point.is_favorite,
+  //   };
+  // }
 
 }
 

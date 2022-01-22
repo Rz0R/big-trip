@@ -5,7 +5,7 @@ export const TimeForFormat = {
 
 export const CITIES = ['Moscow', 'Amsterdam', 'Chamonix', 'Geneva', 'Helsinki', 'Kopenhagen', 'Rome'];
 
-export const TYPES = ['taxi', 'bus', 'train', 'ship', 'transport', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
+export const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
 export const RenderPosition = {
   BEFOREBEGIN: 'beforebegin',

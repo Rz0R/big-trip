@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 const createTripInfoTemplate = (points) => {
   const cities = points
     .sort((a, b) => dayjs(a.dateFrom).toDate() - dayjs(b.dateFrom).toDate())
-    .map((point) => point.city);
+    .map((point) => point.destination.name);
 
   const title = cities.length <= 3
     ? cities.join(' &mdash; ')

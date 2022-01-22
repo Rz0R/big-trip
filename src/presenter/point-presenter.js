@@ -21,10 +21,15 @@ class PointPresenter {
   #changeData = null;
   #changeMode = null;
 
-  constructor(pointListContainer, changeData, changeMode) {
+  #cities = null;
+  #offers = null;
+
+  constructor(pointListContainer, changeData, changeMode, cities, offers) {
     this.#pointListContainer = pointListContainer;
     this.#changeData = changeData;
     this.#changeMode = changeMode;
+    this.#cities = cities;
+    this.#offers = offers;
   }
 
   init = (point) => {
@@ -34,7 +39,7 @@ class PointPresenter {
     const prevEditComponent = this.#editComponent;
 
     this.#pointComponent = new PointView(this.#point);
-    this.#editComponent = new EditPointView(this.#point);
+    this.#editComponent = new EditPointView(this.#point, this.#cities, this.#offers);
 
     this.#pointComponent.setPointEditClickHandler(this.#replaceEventToForm);
     this.#editComponent.setFormSubmitHandler(this.#hadleFormSubmit);

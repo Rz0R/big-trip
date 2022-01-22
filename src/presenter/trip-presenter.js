@@ -27,12 +27,18 @@ class TripPresenter {
 
   #pointPresenters = new Map();
 
+  #cities = null;
+  #offers = null;
+
   constructor(boardContainter, pointsModel, filerModel) {
     this.#boardContainter = boardContainter;
     this.#pointsModel = pointsModel;
     this.#filterModel = filerModel;
 
-    this.#newPointPresenter = new NewPointPresenter(this.#listComponent, this.#handleViewAction);
+    this.#cities = pointsModel.cities;
+    this.#offers = pointsModel.offers;
+
+    this.#newPointPresenter = new NewPointPresenter(this.#listComponent, this.#handleViewAction, this.#cities, this.#offers);
   }
 
   get points() {
@@ -79,7 +85,7 @@ class TripPresenter {
   }
 
   #renderPoint = (point) => {
-    const pointPresenter = new PointPresenter(this.#listComponent, this.#handleViewAction, this.#handleModeChange);
+    const pointPresenter = new PointPresenter(this.#listComponent, this.#handleViewAction, this.#handleModeChange, this.#cities, this.#offers);
     pointPresenter.init(point);
     this.#pointPresenters.set(point.id, pointPresenter);
   }

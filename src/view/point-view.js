@@ -10,8 +10,7 @@ const createOfferMarkup = (title, price) => (
     </li>`
 );
 
-const createPointTemplate = ({ type, city, offers, dateFrom, dateTo, isFavorite, basePrice }) => {
-
+const createPointTemplate = ({ type, destination: { name: city }, offers, dateFrom, dateTo, isFavorite, basePrice }) => {
   const duration = getDuration(dateFrom, dateTo);
   const offersMarkup = offers.map(({ title, price }) => createOfferMarkup(title, price)).join('\n');
 
