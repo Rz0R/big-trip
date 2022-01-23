@@ -14,18 +14,16 @@ const END_POINT = 'https://16.ecmascript.pages.academy/big-trip';
 const apiService = new ApiService(END_POINT, AUTHORIZATION);
 
 const pointsModel = new PointsModel(apiService);
-pointsModel.init();
 
 const filterModel = new FilterModel();
 
 const siteTripMainElement = document.querySelector('.trip-main');
-
 const headerPresenter = new HeaderPresenter(siteTripMainElement, pointsModel);
+
 headerPresenter.init();
 
 const siteTripFiltersElement = siteTripMainElement.querySelector('.trip-controls__filters');
 const filterPresenter = new FilterPresenter(siteTripFiltersElement, pointsModel, filterModel);
-filterPresenter.init();
 
 const siteTripEventsElement = document.querySelector('.trip-events');
 const tripPresenter = new TripPresenter(siteTripEventsElement, pointsModel, filterModel);
@@ -48,9 +46,15 @@ const handleAddNewPointBtnClick = () => {
 };
 
 newPointBtn.addEventListener('click', handleAddNewPointBtnClick);
+disableCreateButton(true);
 
 const siteTripMenuElement = siteTripMainElement.querySelector('.trip-controls__navigation');
 const menuPresenter = new MenuPresenter(siteTripMenuElement, siteTripEventsElement, tripPresenter, filterPresenter, disableCreateButton, pointsModel);
-menuPresenter.init();
+
+pointsModel.init().finally(() => {
+  filterPresenter.init();
+  menuPresenter.init();
+  disableCreateButton(false);
+});
 
 
