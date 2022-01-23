@@ -54,10 +54,13 @@ const createPhotoMarkup = ({ src, description }) => (
 );
 
 const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, destination: { name: city, description, pictures }, basePrice }, destinations, allOffers) => {
-  const offerEls = offers.map((offer) => {
-    const { title, price, id, checked } = offer;
-    return createOfferMarkup(title, price, id, checked);
-  }).join('\n');
+  const offerElsMarkup = allOffers.find((item) => item.type === type)
+    .offers
+    .map(({ title, price, id }) => {
+      const checked = offers.some((offer) => offer.id === id);
+      return createOfferMarkup(title, price, id, checked);
+    })
+    .join('\n');
 
   const photoEls = pictures.map((picture) => createPhotoMarkup(picture)).join('\n');
 
@@ -115,7 +118,7 @@ const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, destination: {
             <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
             <div class="event__available-offers">
-              ${offerEls}
+              ${offerElsMarkup}
             </div>
           </section>
 
