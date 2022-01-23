@@ -240,6 +240,7 @@ class EditPointView extends SmartView {
   }
 
   #setDatepickerFrom = () => {
+    this.#validateDate();
     this.#datepickerFrom = flatpickr(
       this.element.querySelector('#event-start-time-1'),
       {
@@ -259,6 +260,7 @@ class EditPointView extends SmartView {
   }
 
   #setDatepickerTo = () => {
+    this.#validateDate();
     this.#datepickerTo = flatpickr(
       this.element.querySelector('#event-end-time-1'),
       {
@@ -275,6 +277,14 @@ class EditPointView extends SmartView {
     this.updateData({
       dateTo: userDate.toISOString()
     });
+  }
+
+  #validateDate = () => {
+    if (dayjs(this._data.dateTo).diff(dayjs(this._data.dateFrom)) <= 0) {
+      this.element.querySelector('#event-start-time-1').setCustomValidity('Change the time. The start of the trip cannot be later than the end!');
+    } else {
+      this.element.querySelector('#event-start-time-1').setCustomValidity('');
+    }
   }
 
   #offersChangeHandler = (evt) => {
