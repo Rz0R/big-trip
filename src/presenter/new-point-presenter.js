@@ -10,7 +10,7 @@ const DEFAULT_POINT = {
   'type': 'taxi',
   'dateFrom': dayjs().add(1, 'hour'),
   'dateTo': dayjs().add(2, 'hour'),
-  'basePrice': 200,
+  'basePrice': 500,
   'destination': {
     'name': 'Chamonix',
     'description': 'Chamonix, in a middle of Europe, middle-eastern paradise, famous for its crowded street markets with the best street food in Asia.',
@@ -33,33 +33,7 @@ const DEFAULT_POINT = {
       }
     ]
   },
-  'offers': [
-    {
-      'id': 1,
-      'title': 'Upgrade to a business class',
-      'price': 190
-    },
-    {
-      'id': 2,
-      'title': 'Choose the radio station',
-      'price': 30
-    },
-    {
-      'id': 3,
-      'title': 'Choose temperature',
-      'price': 170
-    },
-    {
-      'id': 4,
-      'title': 'Drive quickly, I\'m in a hurry',
-      'price': 100
-    },
-    {
-      'id': 5,
-      'title': 'Drive slowly',
-      'price': 110
-    }
-  ],
+  'offers': [],
 };
 
 class NewPointPresenter {

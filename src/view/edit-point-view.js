@@ -15,6 +15,7 @@ const createOfferMarkup = (title, price, id, isChecked) => (
       visually-hidden"
       id="event-offer-${id}" type="checkbox"
       name="event-offer-${id}"
+      data-id="${id}"
       ${isChecked ? 'checked' : ''}
     >
     <label class="event__offer-label" for="event-offer-${id}">
@@ -179,6 +180,7 @@ class EditPointView extends SmartView {
     this.#setDatepickerTo();
     this.element.querySelector('.event__type-group').addEventListener('change', this.#typeChangeHandler);
     this.element.querySelector('.event__input--destination').addEventListener('change', this.#cityChangeHadler);
+    this.element.querySelector('.event__available-offers').addEventListener('change', this.#offersChangeHandler);
   }
 
   restoreHandlers = () => {
@@ -223,11 +225,9 @@ class EditPointView extends SmartView {
 
   #typeChangeHandler = (evt) => {
     evt.preventDefault();
-    const type = evt.target.value;
-    const newOffers = this.#allOffers.find((offer) => offer.type === type).offers;
     this.updateData({
       type: evt.target.value,
-      offers: cloneDeep(newOffers)
+      offers: []
     });
   }
 
@@ -267,6 +267,28 @@ class EditPointView extends SmartView {
     this.updateData({
       dateTo: userDate.toISOString()
     });
+  }
+
+  #offersChangeHandler = (evt) => {
+    evt.preventDefault();
+    const offerId = Number(evt.target.dataset.id);
+    if (evt.target.checked) {
+      const newOffer = this.#allOffers
+        .find((item) => item.type === this._data.type)
+        .offers
+        .find((item) => item.id === offerId);
+      this.updateData({
+        offers: [
+          ...this._data.offers,
+          newOffer
+        ]
+      });
+    } else {
+      const updatedOffers = this._data.offers.filter((item) => item.id !== offerId);
+      this.updateData({
+        offers: updatedOffers
+      });
+    }
   }
 
 }
