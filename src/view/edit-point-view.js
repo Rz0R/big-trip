@@ -108,7 +108,14 @@ const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, destination: {
               <span class="visually-hidden">Price</span>
               &euro;
             </label>
-            <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${basePrice}">
+            <input
+              class="event__input event__input--price"
+              id="event-price-1"
+              type="number"
+              min="0"
+              step="100"
+              name="event-price"
+              value="${basePrice}">
           </div>
 
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
@@ -181,6 +188,7 @@ class EditPointView extends SmartView {
     this.element.querySelector('.event__type-group').addEventListener('change', this.#typeChangeHandler);
     this.element.querySelector('.event__input--destination').addEventListener('change', this.#cityChangeHadler);
     this.element.querySelector('.event__available-offers').addEventListener('change', this.#offersChangeHandler);
+    this.element.querySelector('.event__input--price').addEventListener('change', this.#priceChangeHandler);
   }
 
   restoreHandlers = () => {
@@ -289,6 +297,13 @@ class EditPointView extends SmartView {
         offers: updatedOffers
       });
     }
+  }
+
+  #priceChangeHandler = (evt) => {
+    evt.preventDefault();
+    this.updateData({
+      basePrice: Number(evt.target.value)
+    });
   }
 
 }
