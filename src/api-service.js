@@ -53,6 +53,15 @@ class ApiService {
     return parsedResponse;
   }
 
+  deletePoint = async (point) => {
+    const response = await this.#load({
+      url: `points/${point.id}`,
+      method: Method.DELETE
+    });
+
+    return response;
+  }
+
   #load = async ({
     url,
     method = Method.GET,
