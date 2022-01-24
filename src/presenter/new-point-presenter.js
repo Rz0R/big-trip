@@ -4,7 +4,6 @@ import { RenderPosition, UpdateType, UserAction } from '../const';
 import { remove, render } from '../utils/render';
 
 import dayjs from 'dayjs';
-import { nanoid } from 'nanoid';
 
 const DEFAULT_POINT = {
   'type': 'taxi',
@@ -34,6 +33,7 @@ const DEFAULT_POINT = {
     ]
   },
   'offers': [],
+  'isFavorite': false
 };
 
 class NewPointPresenter {
@@ -86,7 +86,6 @@ class NewPointPresenter {
       UserAction.ADD_POINT,
       UpdateType.MINOR,
       {
-        id: nanoid(),
         ...point
       }
     );
