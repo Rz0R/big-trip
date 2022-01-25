@@ -33,7 +33,7 @@ const DEFAULT_POINT = {
     ]
   },
   'offers': [],
-  //'isFavorite': false
+  'isFavorite': false
 };
 
 class NewPointPresenter {
