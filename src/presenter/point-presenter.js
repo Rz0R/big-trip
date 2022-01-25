@@ -81,6 +81,14 @@ class PointPresenter {
       return;
     }
 
+    const resetFormState = () => {
+      this.#editComponent.updateData({
+        isDisabled: false,
+        isSaving: false,
+        isDeleting: false,
+      });
+    };
+
     switch (state) {
       case State.SAVING:
         this.#editComponent.updateData({
@@ -93,6 +101,10 @@ class PointPresenter {
           isDisabled: true,
           isDeleting: true,
         });
+        break;
+      case State.ABORTING:
+        this.#pointComponent.shake(resetFormState);
+        this.#editComponent.shake(resetFormState);
         break;
     }
   }

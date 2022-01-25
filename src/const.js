@@ -47,4 +47,5 @@ export const MenuItem = {
 export const State = {
   SAVING: 'SAVING',
   DELETING: 'DELETING',
+  ABORTING: 'ABORTING',
 };

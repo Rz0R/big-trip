@@ -100,19 +100,31 @@ class TripPresenter {
     this.points.forEach((point) => this.#renderPoint(point));
   }
 
-  #handleViewAction = (actionType, updateType, update) => {
+  #handleViewAction = async (actionType, updateType, update) => {
     switch (actionType) {
       case UserAction.UPDATE_POINT:
         this.#pointPresenters.get(update.id).setViewState(PointPresenterViewState.SAVING);
-        this.#pointsModel.updatePoint(updateType, update);
+        try {
+          await this.#pointsModel.updatePoint(updateType, update);
+        } catch (err) {
+          this.#pointPresenters.get(update.id).setViewState(PointPresenterViewState.ABORTING);
+        }
         break;
       case UserAction.ADD_POINT:
         this.#newPointPresenter.setSaving();
-        this.#pointsModel.addPoint(updateType, update);
+        try {
+          await this.#pointsModel.addPoint(updateType, update);
+        } catch (err) {
+          this.#newPointPresenter.setAborting();
+        }
         break;
       case UserAction.DELETE_POINT:
         this.#pointPresenters.get(update.id).setViewState(PointPresenterViewState.DELETING);
-        this.#pointsModel.deletePoint(updateType, update);
+        try {
+          await this.#pointsModel.deletePoint(updateType, update);
+        } catch {
+          this.#pointPresenters.get(update.id).setViewState(PointPresenterViewState.ABORTING);
+        }
         break;
     }
   }
@@ -193,7 +205,10 @@ class TripPresenter {
   }
 
   #clearBoard = () => {
-    this.#newPointPresenter.destroy();
+    if (this.#newPointPresenter) {
+      this.#newPointPresenter.destroy();
+    }
+
     remove(this.#sortComponent);
     this.#clearPointList();
 

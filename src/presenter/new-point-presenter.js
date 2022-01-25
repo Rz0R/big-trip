@@ -33,7 +33,7 @@ const DEFAULT_POINT = {
     ]
   },
   'offers': [],
-  'isFavorite': false
+  //'isFavorite': false
 };
 
 class NewPointPresenter {
@@ -73,6 +73,18 @@ class NewPointPresenter {
       isDisabled: true,
       isSaving: true,
     });
+  }
+
+  setAborting = () => {
+    const resetFormState = () => {
+      this.#editComponent.updateData({
+        isDisabled: false,
+        isSaving: false,
+        isDeleting: false,
+      });
+    };
+
+    this.#editComponent.shake(resetFormState);
   }
 
   destroy = () => {
