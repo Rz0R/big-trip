@@ -8,7 +8,7 @@ import '../../node_modules/flatpickr/dist/flatpickr.min.css';
 
 import dayjs from 'dayjs';
 
-const createOfferMarkup = (title, price, id, isChecked) => (
+const createOfferMarkup = (title, price, id, isChecked, isDisabled) => (
   `<div class="event__offer-selector">
     <input
       class="event__offer-checkbox
@@ -17,6 +17,7 @@ const createOfferMarkup = (title, price, id, isChecked) => (
       name="event-offer-${id}"
       data-id="${id}"
       ${isChecked ? 'checked' : ''}
+      ${isDisabled ? 'disabled' : ''}
     >
     <label class="event__offer-label" for="event-offer-${id}">
       <span class="event__offer-title">${title}</span>
@@ -25,9 +26,16 @@ const createOfferMarkup = (title, price, id, isChecked) => (
     </label>
   </div>`);
 
-const createTypeItemMarkup = (type) => (
+const createTypeItemMarkup = (type, isDisabled) => (
   `<div class="event__type-item">
-    <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
+    <input
+      id="event-type-${type}-1"
+      class="event__type-input
+      visually-hidden" type="radio"
+      name="event-type"
+      value="${type}"
+      ${isDisabled ? 'disabled' : ''}
+    >
     <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type}</label>
   </div>`
 );
@@ -36,8 +44,8 @@ const createCityOptionMarup = (city) => (
   `<option value="${city}"></option>`
 );
 
-const createTypeListMarkup = (types) => {
-  const typeEls = types.map((type) => createTypeItemMarkup(type)).join('\n');
+const createTypeListMarkup = (types, isDisabled) => {
+  const typeEls = types.map((type) => createTypeItemMarkup(type, isDisabled)).join('\n');
 
   return (
     `<div class="event__type-list">
@@ -54,19 +62,22 @@ const createPhotoMarkup = ({ src, description }) => (
   `<img class="event__photo" src="${src}" alt="${description}">`
 );
 
-const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, destination: { name: city, description, pictures }, basePrice }, destinations, allOffers) => {
+const creatEditPointTemplate = (data, destinations, allOffers) => {
+
+  const { type, dateFrom, dateTo, offers, destination: { name: city, description, pictures }, basePrice, isDisabled, isSaving, isDeleting } = data;
+
   const offerElsMarkup = allOffers.find((item) => item.type === type)
     .offers
     .map(({ title, price, id }) => {
       const checked = offers.some((offer) => offer.id === id);
-      return createOfferMarkup(title, price, id, checked);
+      return createOfferMarkup(title, price, id, checked, isDisabled);
     })
     .join('\n');
 
   const photoEls = pictures.map((picture) => createPhotoMarkup(picture)).join('\n');
 
   const allTypes = allOffers.map((item) => item.type);
-  const typeListMarkup = createTypeListMarkup(allTypes);
+  const typeListMarkup = createTypeListMarkup(allTypes, isDisabled);
 
   const allCities = destinations.map((item) => item.name);
   const cityOptionsMarkup = allCities.map((name) => createCityOptionMarup(name)).join('\n');
@@ -89,7 +100,16 @@ const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, destination: {
             <label class="event__label  event__type-output" for="event-destination-1">
               ${type}
             </label>
-            <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
+            <input
+              class="event__input
+              event__input--destination"
+              id="event-destination-1"
+              type="text"
+              name="event-destination"
+              value="${city}"
+              list="destination-list-1"
+              ${isDisabled ? 'disabled' : ''}
+            >
             <datalist id="destination-list-1">
               ${cityOptionsMarkup}
             </datalist>
@@ -97,10 +117,26 @@ const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, destination: {
 
           <div class="event__field-group  event__field-group--time">
             <label class="visually-hidden" for="event-start-time-1">From</label>
-            <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${dayjs(dateFrom).format('DD/MM/YYYY HH:mm')}">
+            <input
+              class="event__input
+              event__input--time"
+              id="event-start-time-1"
+              type="text"
+              name="event-start-time"
+              value="${dayjs(dateFrom).format('DD/MM/YYYY HH:mm')}"
+              ${isDisabled ? 'disabled' : ''}
+            >
             &mdash;
             <label class="visually-hidden" for="event-end-time-1">To</label>
-            <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${dayjs(dateTo).format('DD/MM/YYYY HH:mm')}">
+            <input
+              class="event__input
+              event__input--time"
+              id="event-end-time-1"
+              type="text"
+              name="event-end-time"
+              value="${dayjs(dateTo).format('DD/MM/YYYY HH:mm')}"
+              ${isDisabled ? 'disabled' : ''}
+            >
           </div>
 
           <div class="event__field-group  event__field-group--price">
@@ -115,11 +151,13 @@ const creatEditPointTemplate = ({ type, dateFrom, dateTo, offers, destination: {
               min="0"
               step="100"
               name="event-price"
-              value="${basePrice}">
+              value="${basePrice}"
+              ${isDisabled ? 'disabled' : ''}
+            >
           </div>
 
-          <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-          <button class="event__reset-btn" type="reset">Delete</button>
+          <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''}>${isSaving ? 'Saving...' : 'Save'}</button>
+          <button class="event__reset-btn" type="reset" ${isDisabled ? 'disabled' : ''}>${isDeleting ? 'Deleting...' : 'Delete'}</button>
         </header>
         <section class="event__details">
           <section class="event__section  event__section--offers">
@@ -156,7 +194,7 @@ class EditPointView extends SmartView {
 
   constructor(point, destinations, allOffers) {
     super();
-    this._data = cloneDeep(point);
+    this._data = EditPointView.parsePointToData(point);
     this.#destinations = destinations;
     this.#allOffers = allOffers;
 
@@ -179,7 +217,7 @@ class EditPointView extends SmartView {
   }
 
   reset = (point) => {
-    this.updateData(cloneDeep(point));
+    this.updateData(EditPointView.parsePointToData(point));
   }
 
   #setInnerHandlers = () => {
@@ -205,7 +243,7 @@ class EditPointView extends SmartView {
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this._callback.formSubmit({ ...this._data });
+    this._callback.formSubmit(EditPointView.parseDataToPoint(this._data));
   }
 
   setFormDeleteHandler = (callback) => {
@@ -215,7 +253,7 @@ class EditPointView extends SmartView {
 
   #formDeletetHandler = (evt) => {
     evt.preventDefault();
-    this._callback.formDelete({ ...this._data });
+    this._callback.formDelete(EditPointView.parseDataToPoint(this._data));
   }
 
   #cityChangeHadler = (evt) => {
@@ -314,6 +352,26 @@ class EditPointView extends SmartView {
     this.updateData({
       basePrice: Number(evt.target.value)
     });
+  }
+
+  static parsePointToData = (point) => {
+    const data = cloneDeep(point);
+
+    data.isDisabled = false;
+    data.isSaving = false;
+    data.isDeleting = false;
+
+    return data;
+  }
+
+  static parseDataToPoint = (data) => {
+    const point = cloneDeep(data);
+
+    delete point.isDisabled;
+    delete point.isSaving;
+    delete point.isDeleting;
+
+    return point;
   }
 
 }
