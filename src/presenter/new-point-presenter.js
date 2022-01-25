@@ -68,6 +68,13 @@ class NewPointPresenter {
     document.addEventListener('keydown', this.#escKeyDownHandler);
   }
 
+  setSaving = () => {
+    this.#editComponent.updateData({
+      isDisabled: true,
+      isSaving: true,
+    });
+  }
+
   destroy = () => {
     if (this.#editComponent === null) {
       return;
@@ -89,7 +96,6 @@ class NewPointPresenter {
         ...point
       }
     );
-    this.destroy();
   }
 
   #handleDeleteClick = () => {

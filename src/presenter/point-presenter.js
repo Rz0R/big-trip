@@ -1,7 +1,7 @@
 import PointView from '../view/point-view';
 import EditPointView from '../view/edit-point-view';
 import { remove, render, replace } from '../utils/render';
-import { UpdateType, UserAction } from '../const';
+import { UpdateType, UserAction, State } from '../const';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -56,7 +56,8 @@ class PointPresenter {
     }
 
     if (this.#mode === Mode.EDITING) {
-      replace(this.#editComponent, prevEditComponent);
+      replace(this.#pointComponent, prevEditComponent);
+      this.#mode = Mode.DEFAULT;
     }
 
     remove(prevPointComponent);
@@ -75,6 +76,28 @@ class PointPresenter {
     }
   }
 
+  setViewState = (state) => {
+    if (this.#mode === Mode.DEFAULT) {
+      return;
+    }
+
+    switch (state) {
+      case State.SAVING:
+        this.#editComponent.updateData({
+          isDisabled: true,
+          isSaving: true,
+        });
+        break;
+      case State.DELETING:
+        this.#editComponent.updateData({
+          isDisabled: true,
+          isDeleting: true,
+        });
+        break;
+    }
+  }
+
+
   #escKeyDownHadler = (evt) => {
     if (evt.key === 'Escape' || evt.key === 'Esc') {
       evt.preventDefault();
@@ -85,7 +108,6 @@ class PointPresenter {
 
   #hadleFormSubmit = (updatedPoint) => {
     this.#changeData(UserAction.UPDATE_POINT, UpdateType.MAJOR, updatedPoint);
-    this.#replaceFormToEvent();
   }
 
   #handleFormDelete = (point) => {
