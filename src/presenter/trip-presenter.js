@@ -10,7 +10,7 @@ import { getDuration } from '../utils/common';
 import { render, remove } from '../utils/render';
 import { filter } from '../utils/filter';
 import { RenderPosition, SortType } from '../const';
-import { UserAction, UpdateType } from '../const';
+import { UserAction, UpdateType, State as PointPresenterViewState } from '../const';
 
 class TripPresenter {
 
@@ -103,12 +103,15 @@ class TripPresenter {
   #handleViewAction = (actionType, updateType, update) => {
     switch (actionType) {
       case UserAction.UPDATE_POINT:
+        this.#pointPresenters.get(update.id).setViewState(PointPresenterViewState.SAVING);
         this.#pointsModel.updatePoint(updateType, update);
         break;
       case UserAction.ADD_POINT:
+        this.#newPointPresenter.setSaving();
         this.#pointsModel.addPoint(updateType, update);
         break;
       case UserAction.DELETE_POINT:
+        this.#pointPresenters.get(update.id).setViewState(PointPresenterViewState.DELETING);
         this.#pointsModel.deletePoint(updateType, update);
         break;
     }
@@ -190,6 +193,7 @@ class TripPresenter {
   }
 
   #clearBoard = () => {
+    this.#newPointPresenter.destroy();
     remove(this.#sortComponent);
     this.#clearPointList();
 
