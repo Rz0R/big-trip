@@ -45,6 +45,7 @@ class PointPresenter {
     this.#editComponent.setFormSubmitHandler(this.#hadleFormSubmit);
     this.#editComponent.setFormDeleteHandler(this.#handleFormDelete);
     this.#pointComponent.setFavoriteClickHandler(this.#handleFavoriteClick);
+    this.#editComponent.setFormCancelClickHadler(this.setDefaultView);
 
     if (prevPointComponent === null || prevEditComponent === null) {
       render(this.#pointListContainer, this.#pointComponent);

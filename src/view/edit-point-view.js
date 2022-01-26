@@ -158,6 +158,7 @@ const creatEditPointTemplate = (data, destinations, allOffers) => {
 
           <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''}>${isSaving ? 'Saving...' : 'Save'}</button>
           <button class="event__reset-btn" type="reset" ${isDisabled ? 'disabled' : ''}>${isDeleting ? 'Deleting...' : 'Delete'}</button>
+          <button class="event__rollup-btn" type="button" ${isDisabled ? 'disabled' : ''}><span class="visually-hidden">Open event</span></button>
         </header>
         <section class="event__details">
           <section class="event__section  event__section--offers">
@@ -227,6 +228,7 @@ class EditPointView extends SmartView {
     this.element.querySelector('.event__input--destination').addEventListener('change', this.#cityChangeHadler);
     this.element.querySelector('.event__available-offers').addEventListener('change', this.#offersChangeHandler);
     this.element.querySelector('.event__input--price').addEventListener('change', this.#priceChangeHandler);
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formCancelHandler);
   }
 
   restoreHandlers = () => {
@@ -254,6 +256,16 @@ class EditPointView extends SmartView {
   #formDeletetHandler = (evt) => {
     evt.preventDefault();
     this._callback.formDelete(EditPointView.parseDataToPoint(this._data));
+  }
+
+  setFormCancelClickHadler = (callback) => {
+    this._callback.formCancel = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formCancelHandler);
+  }
+
+  #formCancelHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.formCancel();
   }
 
   #cityChangeHadler = (evt) => {
