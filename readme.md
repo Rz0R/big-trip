@@ -4,7 +4,7 @@
 
 The travel planning app
 
-## [Demo](http://big-trip-rz0r.vercel.app/)
+## [Demo](https://big-trip-rz0rs-projects.vercel.app/)
 
 ## Tech stack:
 
