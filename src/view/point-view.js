@@ -1,12 +1,13 @@
+import { escapeHtml } from '../utils/html';
 import dayjs from 'dayjs';
 import { formatDuration, getDuration } from '../utils/common';
 import AbstractView from './abstract-view';
 
 const createOfferMarkup = (title, price) => (
   `<li class="event__offer">
-      <span class="event__offer-title">${title}</span>
+      <span class="event__offer-title">${escapeHtml(title)}</span>
       &plus;&euro;&nbsp;
-      <span class="event__offer-price">${price}</span>
+      <span class="event__offer-price">${escapeHtml(price)}</span>
     </li>`
 );
 
@@ -19,9 +20,9 @@ const createPointTemplate = ({ type, destination: { name: city }, offers, dateFr
     <div class="event">
       <time class="event__date" datetime="${dayjs(dateFrom).format('YYYY-MM-DD')}">${dayjs(dateFrom).format('MMM DD')}</time>
       <div class="event__type">
-        <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
+        <img class="event__type-icon" width="42" height="42" src="img/icons/${escapeHtml(type)}.png" alt="Event type icon">
       </div>
-      <h3 class="event__title">${type} ${city}</h3>
+      <h3 class="event__title">${escapeHtml(type)} ${escapeHtml(city)}</h3>
       <div class="event__schedule">
         <p class="event__time">
           <time class="event__start-time" datetime="${dayjs(dateFrom).format('YYYY-MM-DDThh:mm')}">${dayjs(dateFrom).format('hh:mm')}</time>
@@ -31,7 +32,7 @@ const createPointTemplate = ({ type, destination: { name: city }, offers, dateFr
         <p class="event__duration">${formatDuration(duration)}</p>
       </div>
       <p class="event__price">
-        &euro;&nbsp;<span class="event__price-value">${basePrice}</span>
+        &euro;&nbsp;<span class="event__price-value">${escapeHtml(basePrice)}</span>
       </p>
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">

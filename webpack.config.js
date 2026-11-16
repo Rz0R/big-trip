@@ -8,6 +8,8 @@ module.exports = {
   },
   devtool: 'source-map',
   devServer: {
+    host: 'localhost',
+    static: { directory: path.resolve(__dirname, 'public') },
     hot: true
   },
   module: {

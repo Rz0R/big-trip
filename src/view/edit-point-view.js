@@ -1,3 +1,4 @@
+import { escapeHtml, safeImageUrl } from '../utils/html';
 import SmartView from './smart-view';
 
 import { cloneDeep } from '../utils/common';
@@ -13,35 +14,35 @@ const createOfferMarkup = (title, price, id, isChecked, isDisabled) => (
     <input
       class="event__offer-checkbox
       visually-hidden"
-      id="event-offer-${id}" type="checkbox"
-      name="event-offer-${id}"
-      data-id="${id}"
+      id="event-offer-${escapeHtml(id)}" type="checkbox"
+      name="event-offer-${escapeHtml(id)}"
+      data-id="${escapeHtml(id)}"
       ${isChecked ? 'checked' : ''}
       ${isDisabled ? 'disabled' : ''}
     >
-    <label class="event__offer-label" for="event-offer-${id}">
-      <span class="event__offer-title">${title}</span>
+    <label class="event__offer-label" for="event-offer-${escapeHtml(id)}">
+      <span class="event__offer-title">${escapeHtml(title)}</span>
       &plus;&euro;&nbsp;
-      <span class="event__offer-price">${price}</span>
+      <span class="event__offer-price">${escapeHtml(price)}</span>
     </label>
   </div>`);
 
 const createTypeItemMarkup = (type, isDisabled) => (
   `<div class="event__type-item">
     <input
-      id="event-type-${type}-1"
+      id="event-type-${escapeHtml(type)}-1"
       class="event__type-input
       visually-hidden" type="radio"
       name="event-type"
-      value="${type}"
+      value="${escapeHtml(type)}"
       ${isDisabled ? 'disabled' : ''}
     >
-    <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type}</label>
+    <label class="event__type-label  event__type-label--${escapeHtml(type)}" for="event-type-${escapeHtml(type)}-1">${escapeHtml(type)}</label>
   </div>`
 );
 
 const createCityOptionMarup = (city) => (
-  `<option value="${city}"></option>`
+  `<option value="${escapeHtml(city)}"></option>`
 );
 
 const createTypeListMarkup = (types, isDisabled) => {
@@ -59,7 +60,7 @@ const createTypeListMarkup = (types, isDisabled) => {
 };
 
 const createPhotoMarkup = ({ src, description }) => (
-  `<img class="event__photo" src="${src}" alt="${description}">`
+  `<img class="event__photo" src="${escapeHtml(safeImageUrl(src))}" alt="${escapeHtml(description)}">`
 );
 
 const creatEditPointTemplate = (data, destinations, allOffers) => {
@@ -89,7 +90,7 @@ const creatEditPointTemplate = (data, destinations, allOffers) => {
           <div class="event__type-wrapper">
             <label class="event__type  event__type-btn" for="event-type-toggle-1">
               <span class="visually-hidden">Choose event type</span>
-              <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event type icon">
+              <img class="event__type-icon" width="17" height="17" src="img/icons/${escapeHtml(type)}.png" alt="Event type icon">
             </label>
             <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -98,7 +99,7 @@ const creatEditPointTemplate = (data, destinations, allOffers) => {
 
           <div class="event__field-group  event__field-group--destination">
             <label class="event__label  event__type-output" for="event-destination-1">
-              ${type}
+              ${escapeHtml(type)}
             </label>
             <input
               class="event__input
@@ -106,7 +107,7 @@ const creatEditPointTemplate = (data, destinations, allOffers) => {
               id="event-destination-1"
               type="text"
               name="event-destination"
-              value="${city}"
+              value="${escapeHtml(city)}"
               list="destination-list-1"
               ${isDisabled ? 'disabled' : ''}
             >
@@ -151,7 +152,7 @@ const creatEditPointTemplate = (data, destinations, allOffers) => {
               min="0"
               step="100"
               name="event-price"
-              value="${basePrice}"
+              value="${escapeHtml(basePrice)}"
               ${isDisabled ? 'disabled' : ''}
             >
           </div>
@@ -171,7 +172,7 @@ const creatEditPointTemplate = (data, destinations, allOffers) => {
 
           <section class="event__section  event__section--destination">
             <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-            <p class="event__destination-description">${description}</p>
+            <p class="event__destination-description">${escapeHtml(description)}</p>
 
             <div class="event__photos-container">
               <div class="event__photos-tape">
