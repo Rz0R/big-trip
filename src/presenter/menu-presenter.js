@@ -65,7 +65,7 @@ class MenuPresenter {
       case MenuItem.TABLE:
         this.#removeStats();
         this.#filterPresenter.disabled = false;
-        this.#disableNewPointBtn(false);
+        this.#disableNewPointBtn(Boolean(this.#pointsModel.error));
         this.#tripPresenter.init();
         break;
       case MenuItem.STATS:

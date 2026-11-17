@@ -31,3 +31,14 @@ npm start
 
 The development server serves `public/` on localhost. Run `npm audit` to check
 both application and development dependencies against current advisories.
+
+## Demo data
+
+The demo loads JSON from `/data/` and photos from `/img/photos/` on the site's
+own domain. It does not depend on the external teaching API or external image
+hosts. A fresh demo contains eight sample events dated around the current day.
+
+Adding, editing, favouriting and deleting events are saved in this browser's
+localStorage, without a shared server database. Clear the `big-trip.demo.points.v1`
+key in browser storage to restore the sample trip. If browser storage is disabled,
+changes last for the current session only.

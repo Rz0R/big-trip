@@ -1,4 +1,4 @@
-import ApiService from './api-service';
+import DemoApiService from './demo-api-service';
 
 import HeaderPresenter from './presenter/header-presenter';
 import TripPresenter from './presenter/trip-presenter';
@@ -8,10 +8,7 @@ import MenuPresenter from './presenter/menu-presenter';
 import PointsModel from './model/points-model';
 import FilterModel from './model/filter-model';
 
-const AUTHORIZATION = 'Basic hS2hfS45wCk1sa2k';
-const END_POINT = 'https://16.ecmascript.pages.academy/big-trip';
-
-const apiService = new ApiService(END_POINT, AUTHORIZATION);
+const apiService = new DemoApiService('/data');
 
 const pointsModel = new PointsModel(apiService);
 
@@ -54,7 +51,7 @@ const menuPresenter = new MenuPresenter(siteTripMenuElement, siteTripEventsEleme
 pointsModel.init().finally(() => {
   filterPresenter.init();
   menuPresenter.init();
-  disableCreateButton(false);
+  disableCreateButton(Boolean(pointsModel.error));
 });
 
 

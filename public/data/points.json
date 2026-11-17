@@ -1,0 +1,254 @@
+[
+  {
+    "id": "demo-1",
+    "type": "taxi",
+    "destination": {
+      "name": "Chamonix",
+      "description": "An alpine town at the foot of Mont Blanc, with mountain walks and views of the French Alps.",
+      "pictures": [
+        {
+          "src": "/img/photos/1.jpg",
+          "description": "Travel photo 1"
+        },
+        {
+          "src": "/img/photos/2.jpg",
+          "description": "Travel photo 2"
+        },
+        {
+          "src": "/img/photos/3.jpg",
+          "description": "Travel photo 3"
+        }
+      ]
+    },
+    "offers": [
+      {
+        "id": 1,
+        "title": "Upgrade to a business class",
+        "price": 190
+      }
+    ],
+    "base_price": 35,
+    "date_from": "2026-01-01T09:00:00.000Z",
+    "date_to": "2026-01-01T10:00:00.000Z",
+    "is_favorite": false
+  },
+  {
+    "id": "demo-2",
+    "type": "check-in",
+    "destination": {
+      "name": "Chamonix",
+      "description": "An alpine town at the foot of Mont Blanc, with mountain walks and views of the French Alps.",
+      "pictures": [
+        {
+          "src": "/img/photos/1.jpg",
+          "description": "Travel photo 1"
+        },
+        {
+          "src": "/img/photos/2.jpg",
+          "description": "Travel photo 2"
+        },
+        {
+          "src": "/img/photos/3.jpg",
+          "description": "Travel photo 3"
+        }
+      ]
+    },
+    "offers": [
+      {
+        "id": 1,
+        "title": "Choose the time of check-in",
+        "price": 70
+      }
+    ],
+    "base_price": 160,
+    "date_from": "2026-01-01T11:00:00.000Z",
+    "date_to": "2026-01-01T12:00:00.000Z",
+    "is_favorite": false
+  },
+  {
+    "id": "demo-3",
+    "type": "train",
+    "destination": {
+      "name": "Geneva",
+      "description": "Explore the lakefront, the old town and the parks of this Swiss city.",
+      "pictures": [
+        {
+          "src": "/img/photos/2.jpg",
+          "description": "Travel photo 1"
+        },
+        {
+          "src": "/img/photos/3.jpg",
+          "description": "Travel photo 2"
+        },
+        {
+          "src": "/img/photos/4.jpg",
+          "description": "Travel photo 3"
+        }
+      ]
+    },
+    "offers": [
+      {
+        "id": 1,
+        "title": "Book a taxi at the arrival point",
+        "price": 110
+      }
+    ],
+    "base_price": 95,
+    "date_from": "2026-01-02T10:00:00.000Z",
+    "date_to": "2026-01-02T13:00:00.000Z",
+    "is_favorite": true
+  },
+  {
+    "id": "demo-4",
+    "type": "sightseeing",
+    "destination": {
+      "name": "Geneva",
+      "description": "Explore the lakefront, the old town and the parks of this Swiss city.",
+      "pictures": [
+        {
+          "src": "/img/photos/2.jpg",
+          "description": "Travel photo 1"
+        },
+        {
+          "src": "/img/photos/3.jpg",
+          "description": "Travel photo 2"
+        },
+        {
+          "src": "/img/photos/4.jpg",
+          "description": "Travel photo 3"
+        }
+      ]
+    },
+    "offers": [],
+    "base_price": 40,
+    "date_from": "2026-01-02T15:00:00.000Z",
+    "date_to": "2026-01-02T17:00:00.000Z",
+    "is_favorite": false
+  },
+  {
+    "id": "demo-5",
+    "type": "flight",
+    "destination": {
+      "name": "Amsterdam",
+      "description": "Discover canals, museums and historic streets in the Dutch capital.",
+      "pictures": [
+        {
+          "src": "/img/photos/3.jpg",
+          "description": "Travel photo 1"
+        },
+        {
+          "src": "/img/photos/4.jpg",
+          "description": "Travel photo 2"
+        },
+        {
+          "src": "/img/photos/5.jpg",
+          "description": "Travel photo 3"
+        }
+      ]
+    },
+    "offers": [
+      {
+        "id": 1,
+        "title": "Choose meal",
+        "price": 120
+      }
+    ],
+    "base_price": 210,
+    "date_from": "2026-01-03T09:00:00.000Z",
+    "date_to": "2026-01-03T11:00:00.000Z",
+    "is_favorite": false
+  },
+  {
+    "id": "demo-6",
+    "type": "restaurant",
+    "destination": {
+      "name": "Amsterdam",
+      "description": "Discover canals, museums and historic streets in the Dutch capital.",
+      "pictures": [
+        {
+          "src": "/img/photos/3.jpg",
+          "description": "Travel photo 1"
+        },
+        {
+          "src": "/img/photos/4.jpg",
+          "description": "Travel photo 2"
+        },
+        {
+          "src": "/img/photos/5.jpg",
+          "description": "Travel photo 3"
+        }
+      ]
+    },
+    "offers": [
+      {
+        "id": 1,
+        "title": "Choose live music",
+        "price": 150
+      }
+    ],
+    "base_price": 65,
+    "date_from": "2026-01-03T19:00:00.000Z",
+    "date_to": "2026-01-03T21:00:00.000Z",
+    "is_favorite": false
+  },
+  {
+    "id": "demo-7",
+    "type": "flight",
+    "destination": {
+      "name": "Rome",
+      "description": "Visit ancient landmarks, lively squares and neighbourhood restaurants.",
+      "pictures": [
+        {
+          "src": "/img/photos/4.jpg",
+          "description": "Travel photo 1"
+        },
+        {
+          "src": "/img/photos/5.jpg",
+          "description": "Travel photo 2"
+        },
+        {
+          "src": "/img/photos/1.jpg",
+          "description": "Travel photo 3"
+        }
+      ]
+    },
+    "offers": [
+      {
+        "id": 1,
+        "title": "Choose meal",
+        "price": 120
+      }
+    ],
+    "base_price": 180,
+    "date_from": "2026-01-05T10:00:00.000Z",
+    "date_to": "2026-01-05T12:00:00.000Z",
+    "is_favorite": false
+  },
+  {
+    "id": "demo-8",
+    "type": "sightseeing",
+    "destination": {
+      "name": "Rome",
+      "description": "Visit ancient landmarks, lively squares and neighbourhood restaurants.",
+      "pictures": [
+        {
+          "src": "/img/photos/4.jpg",
+          "description": "Travel photo 1"
+        },
+        {
+          "src": "/img/photos/5.jpg",
+          "description": "Travel photo 2"
+        },
+        {
+          "src": "/img/photos/1.jpg",
+          "description": "Travel photo 3"
+        }
+      ]
+    },
+    "offers": [],
+    "base_price": 55,
+    "date_from": "2026-01-05T14:00:00.000Z",
+    "date_to": "2026-01-05T17:00:00.000Z",
+    "is_favorite": false
+  }
+]

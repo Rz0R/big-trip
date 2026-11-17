@@ -16,3 +16,10 @@ test('destination images accept only absolute HTTP and HTTPS URLs', () => {
     assert.equal(safeImageUrl(value), '');
   }
 });
+
+test('same-origin image paths work without accepting protocol-relative URL injection', () => {
+  assert.equal(safeImageUrl('/img/photos/1.jpg'), '/img/photos/1.jpg');
+  for (const value of ['//evil.example/a.jpg', '/\\evil.example/a.jpg', '/\n/evil.example/a.jpg']) {
+    assert.equal(safeImageUrl(value), '');
+  }
+});

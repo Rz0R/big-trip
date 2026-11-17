@@ -364,7 +364,7 @@ class EditPointView extends SmartView {
     evt.preventDefault();
     this.updateData({
       basePrice: Number(evt.target.value)
-    });
+    }, true);
   }
 
   static parsePointToData = (point) => {
