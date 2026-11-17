@@ -4,6 +4,7 @@ import PointPresenter from './point-presenter';
 import NewPointPresenter from './new-point-presenter';
 import EmptyListView from '../view/empty-list-view';
 import LoadingView from '../view/loading-view';
+import LoadingErrorView from '../view/loading-error-view';
 
 import dayjs from 'dayjs';
 import { getDuration } from '../utils/common';
@@ -26,6 +27,7 @@ class TripPresenter {
   #listComponent = new ListView();
   #emptyListComponent = null;
   #loadingComponent = new LoadingView();
+  #errorComponent = new LoadingErrorView();
   #newPointPresenter = null;
 
   #pointPresenters = new Map();
@@ -193,6 +195,11 @@ class TripPresenter {
       return;
     }
 
+    if (this.#pointsModel.error) {
+      render(this.#boardContainter, this.#errorComponent);
+      return;
+    }
+
     const pointCount = this.points.length;
 
     if (pointCount === 0) {
@@ -205,6 +212,7 @@ class TripPresenter {
   }
 
   #clearBoard = () => {
+    remove(this.#errorComponent);
     if (this.#newPointPresenter) {
       this.#newPointPresenter.destroy();
     }

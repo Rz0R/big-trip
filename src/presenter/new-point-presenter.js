@@ -10,28 +10,6 @@ const DEFAULT_POINT = {
   'dateFrom': dayjs().add(1, 'hour'),
   'dateTo': dayjs().add(2, 'hour'),
   'basePrice': 500,
-  'destination': {
-    'name': 'Chamonix',
-    'description': 'Chamonix, in a middle of Europe, middle-eastern paradise, famous for its crowded street markets with the best street food in Asia.',
-    'pictures': [
-      {
-        'src': 'http://picsum.photos/300/200?r=0.5442767253004888',
-        'description': 'Chamonix zoo'
-      },
-      {
-        'src': 'http://picsum.photos/300/200?r=0.9459422561320008',
-        'description': 'Chamonix city centre'
-      },
-      {
-        'src': 'http://picsum.photos/300/200?r=0.14330792188576758',
-        'description': 'Chamonix park'
-      },
-      {
-        'src': 'http://picsum.photos/300/200?r=0.05754116582269897',
-        'description': 'Chamonix central station'
-      }
-    ]
-  },
   'offers': [],
   'isFavorite': false
 };
@@ -59,7 +37,7 @@ class NewPointPresenter {
       return;
     }
 
-    this.#editComponent = new EditPointView(DEFAULT_POINT, this.#destinations, this.#allOffers);
+    this.#editComponent = new EditPointView({ ...DEFAULT_POINT, destination: this.#destinations[0] }, this.#destinations, this.#allOffers);
     this.#editComponent.setFormSubmitHandler(this.#handleFormSubmit);
     this.#editComponent.setFormDeleteHandler(this.#handleDeleteClick);
     this.#editComponent.setFormCancelClickHadler(this.#handleDeleteClick);

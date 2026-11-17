@@ -5,6 +5,7 @@ import { UpdateType } from '../const';
 class PointsModel extends AbstractObservable {
 
   #points = [];
+  #error = null;
   #destinations = [];
   #offers = [];
 
@@ -15,13 +16,19 @@ class PointsModel extends AbstractObservable {
     this.#apiService = apiService;
   }
 
+  get error() {
+    return this.#error;
+  }
+
   init = async () => {
+    this.#error = null;
     try {
       const points = await this.#apiService.points;
       this.#points = points.map(this.#adaptToClient);
       this.#destinations = await this.#apiService.destinations;
       this.#offers = await this.#apiService.offers;
     } catch (err) {
+      this.#error = err;
       this.#points = [];
       this.#destinations = [];
       this.#offers = [];

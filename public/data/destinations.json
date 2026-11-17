@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Chamonix",
+    "description": "An alpine town at the foot of Mont Blanc, with mountain walks and views of the French Alps.",
+    "pictures": [
+      {
+        "src": "/img/photos/1.jpg",
+        "description": "Travel photo 1"
+      },
+      {
+        "src": "/img/photos/2.jpg",
+        "description": "Travel photo 2"
+      },
+      {
+        "src": "/img/photos/3.jpg",
+        "description": "Travel photo 3"
+      }
+    ]
+  },
+  {
+    "name": "Geneva",
+    "description": "Explore the lakefront, the old town and the parks of this Swiss city.",
+    "pictures": [
+      {
+        "src": "/img/photos/2.jpg",
+        "description": "Travel photo 1"
+      },
+      {
+        "src": "/img/photos/3.jpg",
+        "description": "Travel photo 2"
+      },
+      {
+        "src": "/img/photos/4.jpg",
+        "description": "Travel photo 3"
+      }
+    ]
+  },
+  {
+    "name": "Amsterdam",
+    "description": "Discover canals, museums and historic streets in the Dutch capital.",
+    "pictures": [
+      {
+        "src": "/img/photos/3.jpg",
+        "description": "Travel photo 1"
+      },
+      {
+        "src": "/img/photos/4.jpg",
+        "description": "Travel photo 2"
+      },
+      {
+        "src": "/img/photos/5.jpg",
+        "description": "Travel photo 3"
+      }
+    ]
+  },
+  {
+    "name": "Rome",
+    "description": "Visit ancient landmarks, lively squares and neighbourhood restaurants.",
+    "pictures": [
+      {
+        "src": "/img/photos/4.jpg",
+        "description": "Travel photo 1"
+      },
+      {
+        "src": "/img/photos/5.jpg",
+        "description": "Travel photo 2"
+      },
+      {
+        "src": "/img/photos/1.jpg",
+        "description": "Travel photo 3"
+      }
+    ]
+  }
+]
